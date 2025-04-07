@@ -1,4 +1,4 @@
-import { NavigationItem } from '../types';
+import { NavigationItem } from "../types";
 
 export const navigationData: NavigationItem[] = [
   {
@@ -8,8 +8,8 @@ export const navigationData: NavigationItem[] = [
       { title: "Cyber Assessments", path: "/services/cyber-assessments" },
       { title: "Cloud Migration", path: "/services/cloud-migration" },
       { title: "Consulting", path: "/services/consulting" },
-      { title: "Physical Security", path: "/services/physical-security" }
-    ]
+      { title: "Physical Security", path: "/services/physical-security" },
+    ],
   },
   {
     title: "Solutions",
@@ -18,8 +18,8 @@ export const navigationData: NavigationItem[] = [
       { title: "Cloud Security", path: "/solutions/cloud-security" },
       { title: "Data Security", path: "/solutions/data-security" },
       { title: "Email Security", path: "/solutions/email-security" },
-      { title: "Endpoint Security", path: "/solutions/endpoint-security" }
-    ]
+      { title: "Endpoint Security", path: "/solutions/endpoint-security" },
+    ],
   },
   {
     title: "AI",
@@ -27,8 +27,8 @@ export const navigationData: NavigationItem[] = [
     children: [
       { title: "AI Security", path: "/ai/security" },
       { title: "Machine Learning", path: "/ai/machine-learning" },
-      { title: "Automation", path: "/ai/automation" }
-    ]
+      { title: "Automation", path: "/ai/automation" },
+    ],
   },
   {
     title: "Company",
@@ -41,15 +41,15 @@ export const navigationData: NavigationItem[] = [
       { title: "FAQs", path: "/company/faqs" },
       { title: "Partners", path: "/company/partners" },
       { title: "Leadership", path: "/company/leadership" },
-      { title: "Pay Here", path: "/company/pay" }
-    ]
+      { title: "Pay Here", path: "/company/pay" },
+    ],
   },
   {
     title: "Contact",
     // path: "/contact",
     children: [
       { title: "Appointment Scheduling", path: "/contact/appointment" },
-      { title: "Contact us", path: "/contact/general" }
-    ]
-  }
+      { title: "Contact us", path: "/contact/general" },
+    ],
+  },
 ];

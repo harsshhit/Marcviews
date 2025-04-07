@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Shield, ChevronDown, ShoppingCart, User, Menu, X } from 'lucide-react';
-import { navigationData } from '../data/navigation';
+import { navigationData } from '../../data/navigation';
 
 export function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

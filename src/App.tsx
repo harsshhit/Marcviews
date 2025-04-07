@@ -1,20 +1,20 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Navigation } from './components/Navigation';
-import { HeroSection } from './components/HeroSection';
-import { SecurityFeatures } from './components/SecurityFeatures';
-import { Categories } from './components/Categories';
-import { Footer } from './components/Footer';
-import { ServiceTemplate } from './components/ServiceTemplate';
-import { Cart } from './components/Cart';
-import { AuthProfile } from './components/Profile';
-import { servicesData } from './data/services';
-import { solutionsData } from './data/solutions';
-import { aiData } from './data/ai';
-import { companyData } from './data/company';
-import { contactData } from './data/contact';
-import { Appointments } from './components/contact/Appointments';
-import { ContactUs } from './components/contact/ContactUs';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Navigation } from "./components/account/Navigation";
+import { HeroSection } from "./components/home/HeroSection";
+import { SecurityFeatures } from "./components/home/SecurityFeatures";
+import { Categories } from "./components/home/Categories";
+import { Footer } from "./components/Footer";
+import { ServiceTemplate } from "./components/ServiceTemplate";
+import { Cart } from "./components/account/Cart";
+import { AuthProfile } from "./components/Profile";
+import { servicesData } from "./components/services/services";
+import { solutionsData } from "./components/solutions/solutions";
+import { aiData } from "./components/ai/ai";
+import { companyData } from "./data/company";
+import { contactData } from "./data/contact";
+import { Appointments } from "./components/contact/Appointments";
+import { ContactUs } from "./components/contact/ContactUs";
 
 function HomePage() {
   return (
@@ -36,10 +36,10 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/profile" element={<AuthProfile />} />
-            
+
             {/* Service Routes */}
             {Object.entries(servicesData).map(([key, data]) => (
-              <Route 
+              <Route
                 key={key}
                 path={`/services/${key}`}
                 element={<ServiceTemplate data={data} />}
@@ -82,8 +82,8 @@ function App() {
               />
             ))}
 
-<Route path="/contact/appointment" element={<Appointments />} />
-<Route path="/contact/general" element={<ContactUs />} />
+            <Route path="/contact/appointment" element={<Appointments />} />
+            <Route path="/contact/general" element={<ContactUs />} />
           </Routes>
         </main>
         <Footer />
