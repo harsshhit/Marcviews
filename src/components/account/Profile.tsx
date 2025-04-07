@@ -1,25 +1,47 @@
-import React, { useState } from 'react';
-import { User, Settings, Bell, Shield, CreditCard, LogOut } from 'lucide-react';
+import React, { useState, FormEvent } from "react";
+import { User, Settings, Bell, Shield, CreditCard, LogOut } from "lucide-react";
 
-const sampleUser = {
-  email: "john.doe@example.com",
-  password: "password123",
-  name: "John Doe",
+interface UserData {
+  email: string;
+  password: string;
+  name: string;
+  role: string;
+  subscription: string;
+  joinDate: string;
+}
+
+interface FormData {
+  email: string;
+  password: string;
+  name: string;
+}
+
+const sampleUser: UserData = {
+  email: "raj.mehra@techmail.in",
+  password: "secure@123",
+  name: "Raj Mehra",
   role: "Enterprise Client",
-  subscription: "Premium Security Package",
-  joinDate: "January 2024"
+  subscription: "Advanced Cybersecurity Suite",
+  joinDate: "February 2024",
 };
 
 export function AuthProfile() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [form, setForm] = useState({ email: "", password: "", name: "" });
-  const [user, setUser] = useState(null);
+  const [form, setForm] = useState<FormData>({
+    email: "",
+    password: "",
+    name: "",
+  });
+  const [user, setUser] = useState<UserData | null>(null);
   const [error, setError] = useState("");
   const [isRegistering, setIsRegistering] = useState(false);
 
-  const handleLogin = (e) => {
+  const handleLogin = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (form.email === sampleUser.email && form.password === sampleUser.password) {
+    if (
+      form.email === sampleUser.email &&
+      form.password === sampleUser.password
+    ) {
       setUser(sampleUser);
       setIsLoggedIn(true);
       setError("");
@@ -28,14 +50,13 @@ export function AuthProfile() {
     }
   };
 
-  const handleRegister = (e) => {
+  const handleRegister = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Simulate successful registration
-    const newUser = {
+    const newUser: UserData = {
       ...form,
       role: "New User",
       subscription: "Free Plan",
-      joinDate: "April 2025"
+      joinDate: "April 2025",
     };
     setUser(newUser);
     setIsLoggedIn(true);
@@ -46,6 +67,13 @@ export function AuthProfile() {
     setForm({ email: "", password: "", name: "" });
     setError("");
     setIsRegistering(!isRegistering);
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    setUser(null);
+    setForm({ email: "", password: "", name: "" });
+    setIsRegistering(false);
   };
 
   if (!isLoggedIn) {
@@ -97,6 +125,20 @@ export function AuthProfile() {
           </div>
 
           <button
+            type="button"
+            onClick={() =>
+              setForm({
+                email: sampleUser.email,
+                password: sampleUser.password,
+                name: sampleUser.name,
+              })
+            }
+            className="w-full mb-4 bg-accent-teal/20 text-accent-teal px-4 py-2 rounded-lg hover:bg-accent-teal/30 transition"
+          >
+            Autofill Demo User
+          </button>
+
+          <button
             type="submit"
             className="w-full bg-gradient-to-r from-accent-purple to-accent-teal text-white px-4 py-2 rounded-lg hover:shadow-lg"
           >
@@ -108,7 +150,9 @@ export function AuthProfile() {
             onClick={toggleAuthMode}
             className="mt-4 text-sm text-white/70 hover:text-white underline block text-center"
           >
-            {isRegistering ? "Already have an account? Login" : "Don't have an account? Register"}
+            {isRegistering
+              ? "Already have an account? Login"
+              : "Don't have an account? Register"}
           </button>
         </form>
       </div>
@@ -116,19 +160,16 @@ export function AuthProfile() {
   }
 
   const menuItems = [
-    { icon: <User className="w-5 h-5" />, label: "Account Details", active: true },
+    {
+      icon: <User className="w-5 h-5" />,
+      label: "Account Details",
+      active: true,
+    },
     { icon: <Shield className="w-5 h-5" />, label: "Security" },
     { icon: <Bell className="w-5 h-5" />, label: "Notifications" },
     { icon: <CreditCard className="w-5 h-5" />, label: "Billing" },
-    { icon: <Settings className="w-5 h-5" />, label: "Preferences" }
+    { icon: <Settings className="w-5 h-5" />, label: "Preferences" },
   ];
-
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    setUser(null);
-    setForm({ email: "", password: "", name: "" });
-    setIsRegistering(false);
-  };
 
   return (
     <div className="pt-24 pb-16 min-h-screen bg-gradient-to-b from-secondary-dark to-primary">
@@ -141,8 +182,10 @@ export function AuthProfile() {
                 <div className="w-24 h-24 bg-gradient-to-r from-accent-purple to-accent-teal rounded-full flex items-center justify-center mx-auto mb-4">
                   <User className="w-12 h-12 text-neutral-white" />
                 </div>
-                <h2 className="text-xl font-semibold text-neutral-white">{user.name}</h2>
-                <p className="text-neutral-white/70">{user.role}</p>
+                <h2 className="text-xl font-semibold text-neutral-white">
+                  {user?.name}
+                </h2>
+                <p className="text-neutral-white/70">{user?.role}</p>
               </div>
 
               <nav className="space-y-2">
@@ -151,8 +194,8 @@ export function AuthProfile() {
                     key={index}
                     className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${
                       item.active
-                        ? 'bg-primary-accent/20 text-accent-teal'
-                        : 'text-neutral-white/70 hover:bg-primary-accent/10 hover:text-neutral-white'
+                        ? "bg-primary-accent/20 text-accent-teal"
+                        : "text-neutral-white/70 hover:bg-primary-accent/10 hover:text-neutral-white"
                     }`}
                   >
                     {item.icon}
@@ -173,7 +216,9 @@ export function AuthProfile() {
           {/* Main Content */}
           <div className="md:col-span-3 space-y-8">
             <div className="bg-secondary-dark/50 backdrop-blur-sm rounded-lg p-8 border border-primary-accent/20">
-              <h2 className="text-2xl font-semibold text-neutral-white mb-6">Account Details</h2>
+              <h2 className="text-2xl font-semibold text-neutral-white mb-6">
+                Account Details
+              </h2>
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-medium text-neutral-white/70 mb-2">
@@ -181,7 +226,8 @@ export function AuthProfile() {
                   </label>
                   <input
                     type="text"
-                    value={user.name}
+                    value={user?.name}
+                    readOnly
                     className="w-full bg-secondary-dark border border-primary-accent/20 rounded-lg px-4 py-2 text-neutral-white"
                   />
                 </div>
@@ -191,7 +237,8 @@ export function AuthProfile() {
                   </label>
                   <input
                     type="email"
-                    value={user.email}
+                    value={user?.email}
+                    readOnly
                     className="w-full bg-secondary-dark border border-primary-accent/20 rounded-lg px-4 py-2 text-neutral-white"
                   />
                 </div>
@@ -201,7 +248,7 @@ export function AuthProfile() {
                   </label>
                   <input
                     type="text"
-                    value={user.subscription}
+                    value={user?.subscription}
                     disabled
                     className="w-full bg-secondary-dark border border-primary-accent/20 rounded-lg px-4 py-2 text-neutral-white/70"
                   />
@@ -212,7 +259,7 @@ export function AuthProfile() {
                   </label>
                   <input
                     type="text"
-                    value={user.joinDate}
+                    value={user?.joinDate}
                     disabled
                     className="w-full bg-secondary-dark border border-primary-accent/20 rounded-lg px-4 py-2 text-neutral-white/70"
                   />
@@ -221,19 +268,24 @@ export function AuthProfile() {
             </div>
 
             <div className="bg-secondary-dark/50 backdrop-blur-sm rounded-lg p-8 border border-primary-accent/20">
-              <h2 className="text-2xl font-semibold text-neutral-white mb-4">Your Bookings</h2>
+              <h2 className="text-2xl font-semibold text-neutral-white mb-4">
+                Your Bookings
+              </h2>
               <div className="space-y-4">
                 <div className="bg-secondary-dark p-4 rounded-lg border border-primary-accent/10 text-white">
-                  <p className="font-semibold">Security Audit - April 15, 2024</p>
+                  <p className="font-semibold">
+                    Security Audit - April 15, 2024
+                  </p>
                   <p className="text-white/70 text-sm">Status: Confirmed</p>
                 </div>
                 <div className="bg-secondary-dark p-4 rounded-lg border border-primary-accent/10 text-white">
-                  <p className="font-semibold">Consultation Call - April 18, 2024</p>
+                  <p className="font-semibold">
+                    Consultation Call - April 18, 2024
+                  </p>
                   <p className="text-white/70 text-sm">Status: Pending</p>
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </div>
