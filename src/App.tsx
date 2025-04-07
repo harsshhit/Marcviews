@@ -1,20 +1,26 @@
-import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Navigation } from "./components/account/Navigation";
+import { Navigation } from "./components/Navigation";
 import { HeroSection } from "./components/home/HeroSection";
 import { SecurityFeatures } from "./components/home/SecurityFeatures";
 import { Categories } from "./components/home/Categories";
 import { Footer } from "./components/Footer";
 import { ServiceTemplate } from "./components/ServiceTemplate";
 import { Cart } from "./components/account/Cart";
-import { AuthProfile } from "./components/Profile";
+import { AuthProfile } from "./components/account/Profile";
 import { servicesData } from "./components/services/services";
 import { solutionsData } from "./components/solutions/solutions";
 import { aiData } from "./components/ai/ai";
-import { companyData } from "./data/company";
 import { contactData } from "./data/contact";
 import { Appointments } from "./components/contact/Appointments";
 import { ContactUs } from "./components/contact/ContactUs";
+import { PayHere } from "./components/company/PayHere";
+import { Leadership } from "./components/company/Leadership";
+import { Partners } from "./components/company/Partners";
+import { FAQs } from "./components/company/FAQs";
+import { Events } from "./components/company/Events";
+import { Careers } from "./components/company/Careers";
+import { Blogs } from "./components/company/Blogs";
+import { AboutUs } from "./components/company/AboutUs";
 
 function HomePage() {
   return (
@@ -64,15 +70,6 @@ function App() {
               />
             ))}
 
-            {/* Company Routes */}
-            {Object.entries(companyData).map(([key, data]) => (
-              <Route
-                key={key}
-                path={`/company/${key}`}
-                element={<ServiceTemplate data={data} />}
-              />
-            ))}
-
             {/* Contact Routes */}
             {Object.entries(contactData).map(([key, data]) => (
               <Route
@@ -84,6 +81,15 @@ function App() {
 
             <Route path="/contact/appointment" element={<Appointments />} />
             <Route path="/contact/general" element={<ContactUs />} />
+
+            <Route path="/company/about" element={<AboutUs />} />
+            <Route path="/company/blogs" element={<Blogs />} />
+            <Route path="/company/careers" element={<Careers />} />
+            <Route path="/company/events" element={<Events />} />
+            <Route path="/company/faqs" element={<FAQs />} />
+            <Route path="/company/partners" element={<Partners />} />
+            <Route path="/company/leadership" element={<Leadership />} />
+            <Route path="/company/payhere" element={<PayHere />} />
           </Routes>
         </main>
         <Footer />

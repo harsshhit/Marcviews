@@ -1,4 +1,3 @@
-import React from "react";
 import { ServicePage } from "../types";
 
 interface ServiceTemplateProps {

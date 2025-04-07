@@ -1,12 +1,69 @@
-import React, { useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Shield, ChevronDown, ShoppingCart, User, Menu, X } from 'lucide-react';
-import { navigationData } from '../../data/navigation';
+import React, { useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Shield, ChevronDown, ShoppingCart, User, Menu, X } from "lucide-react";
+import { servicesData } from "./services/services";
+import { solutionsData } from "./solutions/solutions";
+import { aiData } from "./ai/ai";
+import { contactData } from "../data/contact";
 
 export function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+
+  // Create navigation data from route data
+  const navigationData = [
+    {
+      title: "Services",
+      path: "/services",
+      children: Object.entries(servicesData).map(([key, data]) => ({
+        title: data.title,
+        path: `/services/${key}`,
+      })),
+    },
+    {
+      title: "Solutions",
+      path: "/solutions",
+      children: Object.entries(solutionsData).map(([key, data]) => ({
+        title: data.title,
+        path: `/solutions/${key}`,
+      })),
+    },
+    {
+      title: "AI",
+      path: "/ai",
+      children: Object.entries(aiData).map(([key, data]) => ({
+        title: data.title,
+        path: `/ai/${key}`,
+      })),
+    },
+    {
+      title: "Company",
+      path: "/company",
+      children: [
+        { title: "About Us", path: "/company/about" },
+        { title: "Blogs", path: "/company/blogs" },
+        { title: "Careers", path: "/company/careers" },
+        { title: "Events", path: "/company/events" },
+        { title: "FAQs", path: "/company/faqs" },
+        { title: "Partners", path: "/company/partners" },
+        { title: "Leadership", path: "/company/leadership" },
+        { title: "Pay Here", path: "/company/payhere" },
+      ],
+    },
+    {
+      title: "Contact",
+      path: "/contact",
+      children: [
+        { title: "Appointments", path: "/contact/appointment" },
+        { title: "Contact Us", path: "/contact/general" },
+        ...Object.entries(contactData).map(([key, data]) => ({
+          title: data.title,
+          path: `/contact/${key}`,
+        })),
+      ],
+    },
+  ];
 
   return (
     <nav className="bg-primary shadow-lg fixed w-full z-50 backdrop-blur-md top-0">
@@ -20,28 +77,35 @@ export function Navigation() {
               </span>
             </Link>
           </div>
-          
+
           <div className="hidden md:flex items-center space-x-8">
-            <Link to="/" className={`text-neutral-white/80 hover:text-neutral-white transition-colors ${location.pathname === '/' ? 'text-neutral-white' : ''}`}>
+            <Link
+              to="/"
+              className={`text-neutral-white/80 hover:text-neutral-white transition-colors ${
+                location.pathname === "/" ? "text-neutral-white" : ""
+              }`}
+            >
               Home
             </Link>
-            
+
             {navigationData.map((item) => (
               <div key={item.path} className="relative group">
-                <Link 
+                <Link
                   to={item.path}
                   className={`flex items-center text-neutral-white/80 hover:text-neutral-white transition-colors ${
-                    location.pathname.startsWith(item.path) ? 'text-neutral-white' : ''
+                    location.pathname.startsWith(item.path)
+                      ? "text-neutral-white"
+                      : ""
                   }`}
                 >
-                  {item.title} 
+                  {item.title}
                   <ChevronDown className="ml-1 h-4 w-4 transform group-hover:rotate-180 transition-transform duration-200" />
                 </Link>
-                <div 
+                <div
                   className="absolute left-0 top-full opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 ease-in-out pt-2"
-                  style={{ 
-                    transform: 'translateY(-10px)',
-                    transition: 'all 0.2s ease-in-out',
+                  style={{
+                    transform: "translateY(-10px)",
+                    transition: "all 0.2s ease-in-out",
                   }}
                 >
                   <div className="bg-secondary-dark rounded-lg shadow-xl border border-primary-accent/20 overflow-hidden min-w-[240px]">
@@ -58,20 +122,24 @@ export function Navigation() {
                 </div>
               </div>
             ))}
-            
+
             <div className="flex items-center space-x-4">
-              <button 
-                onClick={() => navigate('/cart')}
+              <button
+                onClick={() => navigate("/cart")}
                 className={`text-neutral-white/80 hover:text-neutral-white transition-colors p-2 rounded-full hover:bg-primary-light ${
-                  location.pathname === '/cart' ? 'text-neutral-white bg-primary-light' : ''
+                  location.pathname === "/cart"
+                    ? "text-neutral-white bg-primary-light"
+                    : ""
                 }`}
               >
                 <ShoppingCart className="h-6 w-6" />
               </button>
-              <button 
-                onClick={() => navigate('/profile')}
+              <button
+                onClick={() => navigate("/profile")}
                 className={`text-neutral-white/80 hover:text-neutral-white transition-colors p-2 rounded-full hover:bg-primary-light ${
-                  location.pathname === '/profile' ? 'text-neutral-white bg-primary-light' : ''
+                  location.pathname === "/profile"
+                    ? "text-neutral-white bg-primary-light"
+                    : ""
                 }`}
               >
                 <User className="h-6 w-6" />
@@ -84,16 +152,20 @@ export function Navigation() {
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="text-neutral-white/80 hover:text-neutral-white p-2 rounded-lg hover:bg-primary-light transition-colors"
             >
-              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              {isMenuOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <Menu className="h-6 w-6" />
+              )}
             </button>
           </div>
         </div>
       </div>
 
       {/* Mobile menu */}
-      <div 
+      <div
         className={`md:hidden bg-secondary-dark border-t border-primary-accent/20 fixed w-full top-16 max-h-[calc(100vh-4rem)] overflow-y-auto transition-all duration-300 ease-in-out ${
-          isMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
+          isMenuOpen ? "opacity-100 visible" : "opacity-0 invisible"
         }`}
       >
         <div className="px-2 pt-2 pb-3 space-y-1">

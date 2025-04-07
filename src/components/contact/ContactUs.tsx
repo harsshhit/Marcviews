@@ -1,5 +1,4 @@
 // src/components/ContactUs.tsx
-import React from "react";
 
 const locations = [
   {
@@ -47,7 +46,9 @@ export function ContactUs() {
             <p className="text-sm mb-1">Phone: {loc.phone}</p>
             <p className="text-xs mt-2 text-white/50">{loc.timezone}</p>
             {loc.closedToday && (
-              <p className="text-sm mt-1 text-red-400 font-semibold">Closed Today</p>
+              <p className="text-sm mt-1 text-red-400 font-semibold">
+                Closed Today
+              </p>
             )}
           </div>
         ))}
@@ -55,15 +56,24 @@ export function ContactUs() {
 
       {/* Inquiry Form */}
       <div className="bg-secondary-dark p-8 rounded-xl border border-primary-accent/20 max-w-2xl mx-auto">
-        <h2 className="text-2xl font-bold mb-6">Demo, Sales, Pricing & Partnership Inquiries</h2>
+        <h2 className="text-2xl font-bold mb-6">
+          Demo, Sales, Pricing & Partnership Inquiries
+        </h2>
         <form className="space-y-5">
           <div>
             <label className="block text-white/70 mb-1">Name*</label>
-            <input className="w-full p-3 rounded bg-primary text-white border border-primary-accent/20" required />
+            <input
+              className="w-full p-3 rounded bg-primary text-white border border-primary-accent/20"
+              required
+            />
           </div>
           <div>
             <label className="block text-white/70 mb-1">Email*</label>
-            <input type="email" className="w-full p-3 rounded bg-primary text-white border border-primary-accent/20" required />
+            <input
+              type="email"
+              className="w-full p-3 rounded bg-primary text-white border border-primary-accent/20"
+              required
+            />
           </div>
           <div>
             <label className="block text-white/70 mb-1">Industry</label>
@@ -71,19 +81,33 @@ export function ContactUs() {
           </div>
           <div>
             <label className="block text-white/70 mb-1">Company Name*</label>
-            <input className="w-full p-3 rounded bg-primary text-white border border-primary-accent/20" required />
+            <input
+              className="w-full p-3 rounded bg-primary text-white border border-primary-accent/20"
+              required
+            />
           </div>
           <div>
-            <label className="block text-white/70 mb-1">Company Website URL</label>
-            <input type="url" className="w-full p-3 rounded bg-primary text-white border border-primary-accent/20" />
+            <label className="block text-white/70 mb-1">
+              Company Website URL
+            </label>
+            <input
+              type="url"
+              className="w-full p-3 rounded bg-primary text-white border border-primary-accent/20"
+            />
           </div>
           <div>
             <label className="block text-white/70 mb-1">Address</label>
             <input className="w-full p-3 rounded bg-primary text-white border border-primary-accent/20" />
           </div>
           <div>
-            <label className="block text-white/70 mb-1">What would you like us to help you with?*</label>
-            <textarea className="w-full p-3 rounded bg-primary text-white border border-primary-accent/20" rows={4} required />
+            <label className="block text-white/70 mb-1">
+              What would you like us to help you with?*
+            </label>
+            <textarea
+              className="w-full p-3 rounded bg-primary text-white border border-primary-accent/20"
+              rows={4}
+              required
+            />
           </div>
           <div className="flex items-center gap-2">
             <input type="checkbox" id="updates" />
@@ -93,12 +117,25 @@ export function ContactUs() {
           </div>
           <p className="text-xs text-white/40">
             This site is protected by reCAPTCHA and the Google{" "}
-            <a href="https://policies.google.com/privacy" className="underline">Privacy Policy</a> and{" "}
-            <a href="https://policies.google.com/terms" className="underline">Terms of Service</a> apply.
+            <a href="https://policies.google.com/privacy" className="underline">
+              Privacy Policy
+            </a>{" "}
+            and{" "}
+            <a href="https://policies.google.com/terms" className="underline">
+              Terms of Service
+            </a>{" "}
+            apply.
           </p>
           <div className="flex gap-4 mt-4">
-            <button className="bg-accent-teal px-6 py-3 rounded-lg hover:bg-accent-purple transition">Send</button>
-            <button type="reset" className="bg-red-500 px-6 py-3 rounded-lg hover:bg-red-600 transition">Cancel</button>
+            <button className="bg-accent-teal px-6 py-3 rounded-lg hover:bg-accent-purple transition">
+              Send
+            </button>
+            <button
+              type="reset"
+              className="bg-red-500 px-6 py-3 rounded-lg hover:bg-red-600 transition"
+            >
+              Cancel
+            </button>
           </div>
         </form>
       </div>
