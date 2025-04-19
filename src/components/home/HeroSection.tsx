@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 
 interface Slide {
   title: string;
   description: string;
   image: string;
+  features: string[];
 }
 
 export function HeroSection() {
@@ -12,19 +14,40 @@ export function HeroSection() {
   const slides: Slide[] = [
     {
       title: "Accelerate Together",
-      description: "Modernize legacy infrastructure with enhanced operational efficiency and cloud migration",
-      image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=2070"
+      description:
+        "Modernize legacy infrastructure with enhanced operational efficiency and cloud migration",
+      image:
+        "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=2070",
+      features: [
+        "24/7 Monitoring & Support",
+        "Automated Security Protocols",
+        "Real-time Threat Detection",
+      ],
     },
     {
       title: "Enterprise Grade Defense",
-      description: "Centralized control with real-time protection 24/7/365 and enhanced security with tailored guidance",
-      image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=2070"
+      description:
+        "Centralized control with real-time protection 24/7/365 and enhanced security with tailored guidance",
+      image:
+        "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=2070",
+      features: [
+        "Advanced Threat Intelligence",
+        "Compliance Management",
+        "Incident Response",
+      ],
     },
     {
       title: "An Evolving Threat Landscape",
-      description: "Gain full-visibility into cyberthreats while reducing costs and enhancing operational efficiency",
-      image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=2070"
-    }
+      description:
+        "Gain full-visibility into cyberthreats while reducing costs and enhancing operational efficiency",
+      image:
+        "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=2070",
+      features: [
+        "AI-Powered Analytics",
+        "Predictive Security",
+        "Automated Remediation",
+      ],
+    },
   ];
 
   useEffect(() => {
@@ -35,40 +58,65 @@ export function HeroSection() {
   }, []);
 
   return (
-    <div className="relative h-[600px] mt-16">
+    <div className="relative h-[700px] mt-16 overflow-hidden">
       {slides.map((slide, index) => (
-        <div 
+        <motion.div
           key={index}
           className={`absolute inset-0 bg-cover bg-center transition-opacity duration-500 ${
-            index === currentSlide ? 'opacity-100' : 'opacity-0'
+            index === currentSlide ? "opacity-100" : "opacity-0"
           }`}
           style={{ backgroundImage: `url(${slide.image})` }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: index === currentSlide ? 1 : 0 }}
+          transition={{ duration: 0.5 }}
         >
-          <div className="absolute inset-0 bg-gradient-to-r from-secondary-dark/90 via-secondary-dark/85 to-transparent">
+          <div className="absolute inset-0 bg-gradient-to-r from-secondary-dark/95 via-secondary-dark/90 to-transparent">
             <div className="max-w-7xl mx-auto px-4 h-full flex items-center">
-              <div className="text-neutral-white max-w-2xl">
-                <h1 className="text-5xl font-bold mb-4 text-neutral-white">
+              <motion.div
+                className="text-neutral-white max-w-2xl"
+                initial={{ x: -50, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ delay: 0.2, duration: 0.5 }}
+              >
+                <h1 className="text-6xl font-bold mb-6 text-neutral-white leading-tight">
                   {slide.title}
                 </h1>
-                <p className="text-xl mb-8 text-neutral-white/90">{slide.description}</p>
-                <button className="bg-gradient-to-r from-accent-purple to-accent-teal text-neutral-white px-8 py-3 rounded-lg hover:shadow-lg hover:shadow-accent-purple/20 transition-all duration-300">
-                  Learn More
-                </button>
-              </div>
+                <p className="text-xl mb-8 text-neutral-white/90 leading-relaxed">
+                  {slide.description}
+                </p>
+
+                <div className="space-y-3">
+                  {slide.features.map((feature, i) => (
+                    <motion.div
+                      key={i}
+                      className="flex items-center space-x-3"
+                      initial={{ x: -20, opacity: 0 }}
+                      animate={{ x: 0, opacity: 1 }}
+                      transition={{ delay: 0.3 + i * 0.1 }}
+                    >
+                      <div className="w-2 h-2 rounded-full bg-accent-teal" />
+                      <span className="text-neutral-white/90">{feature}</span>
+                    </motion.div>
+                  ))}
+                </div>
+              </motion.div>
             </div>
           </div>
-        </div>
+        </motion.div>
       ))}
+
       <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
         {slides.map((_, index) => (
-          <button
+          <motion.button
             key={index}
             className={`w-3 h-3 rounded-full transition-all duration-300 ${
-              index === currentSlide 
-                ? 'bg-accent-purple w-8'
-                : 'bg-neutral-white/50 hover:bg-neutral-white'
+              index === currentSlide
+                ? "bg-accent-purple w-8"
+                : "bg-neutral-white/50 hover:bg-neutral-white"
             }`}
             onClick={() => setCurrentSlide(index)}
+            whileHover={{ scale: 1.2 }}
+            whileTap={{ scale: 0.9 }}
           />
         ))}
       </div>

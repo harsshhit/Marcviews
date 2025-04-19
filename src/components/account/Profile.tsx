@@ -1,9 +1,15 @@
-import React, { useState, FormEvent } from "react";
-import { User, Settings, Bell, Shield, CreditCard, LogOut } from "lucide-react";
+import React, { useState, FormEvent, useEffect } from "react";
+import { User, CreditCard, LogOut, Calendar } from "lucide-react";
+import authService, {
+  LoginData,
+  RegisterData,
+} from "../../services/authService";
+import bookingService, { Booking } from "../../services/bookingService";
+import serviceService, { Service } from "../../services/serviceService";
+import { useNavigate } from "react-router-dom";
 
 interface UserData {
   email: string;
-  password: string;
   name: string;
   role: string;
   subscription: string;
@@ -16,17 +22,18 @@ interface FormData {
   name: string;
 }
 
-const sampleUser: UserData = {
-  email: "raj.mehra@techmail.in",
-  password: "secure@123",
-  name: "Raj Mehra",
-  role: "Enterprise Client",
-  subscription: "Advanced Cybersecurity Suite",
-  joinDate: "February 2024",
-};
+interface ApiError {
+  response?: {
+    data?: {
+      message: string;
+    };
+  };
+  message: string;
+}
 
 export function AuthProfile() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useState(authService.isAuthenticated());
   const [form, setForm] = useState<FormData>({
     email: "",
     password: "",
@@ -35,126 +42,283 @@ export function AuthProfile() {
   const [user, setUser] = useState<UserData | null>(null);
   const [error, setError] = useState("");
   const [isRegistering, setIsRegistering] = useState(false);
+  const [bookings, setBookings] = useState<Booking[]>([]);
+  const [services, setServices] = useState<Service[]>([]);
+  const [activeTab, setActiveTab] = useState("account");
+  const [loading, setLoading] = useState(false);
 
-  const handleLogin = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (
-      form.email === sampleUser.email &&
-      form.password === sampleUser.password
-    ) {
-      setUser(sampleUser);
+  useEffect(() => {
+    if (isLoggedIn) {
+      checkAuthStatus();
+    }
+  }, [isLoggedIn]);
+
+  const checkAuthStatus = async () => {
+    try {
+      setLoading(true);
+      const response = await authService.getCurrentUser();
+      const userData: UserData = {
+        email: response.data.user.email,
+        name: response.data.user.name,
+        role: "User",
+        subscription: "Free Plan",
+        joinDate: new Date(response.data.user.createdAt).toLocaleDateString(
+          "en-US",
+          { month: "long", year: "numeric" }
+        ),
+      };
+      setUser(userData);
       setIsLoggedIn(true);
-      setError("");
-    } else {
-      setError("Invalid email or password.");
+
+      // Fetch bookings and services
+      await Promise.all([fetchBookings(), fetchServices()]);
+    } catch (error) {
+      console.error("Auth check failed:", error);
+      authService.logout();
+      setIsLoggedIn(false);
+      setUser(null);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleRegister = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const newUser: UserData = {
-      ...form,
-      role: "New User",
-      subscription: "Free Plan",
-      joinDate: "April 2025",
-    };
-    setUser(newUser);
-    setIsLoggedIn(true);
-    setError("");
+  const fetchBookings = async () => {
+    try {
+      const bookingsData = await bookingService.getBookings();
+      setBookings(bookingsData.data.bookings);
+    } catch (error: Error | unknown) {
+      console.error("Failed to fetch bookings:", error);
+    }
   };
 
-  const toggleAuthMode = () => {
-    setForm({ email: "", password: "", name: "" });
+  const fetchServices = async () => {
+    try {
+      const response = await serviceService.getServices();
+      setServices(response.data.services);
+    } catch (error) {
+      console.error("Failed to fetch services:", error);
+    }
+  };
+
+  const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     setError("");
-    setIsRegistering(!isRegistering);
+    setLoading(true);
+    try {
+      const loginData: LoginData = {
+        email: form.email,
+        password: form.password,
+      };
+      const response = await authService.login(loginData);
+      const userData: UserData = {
+        email: response.data.user.email,
+        name: response.data.user.name,
+        role: "User",
+        subscription: "Free Plan",
+        joinDate: new Date(response.data.user.createdAt).toLocaleDateString(
+          "en-US",
+          { month: "long", year: "numeric" }
+        ),
+      };
+      setUser(userData);
+      setIsLoggedIn(true);
+      setError("");
+      navigate("/profile");
+    } catch (error: unknown) {
+      const apiError = error as ApiError;
+      setError(
+        apiError.response?.data?.message ||
+          apiError.message ||
+          "Login failed. Please try again."
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleRegister = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setError("");
+    setLoading(true);
+    try {
+      const registerData: RegisterData = {
+        email: form.email,
+        password: form.password,
+        name: form.name,
+      };
+      const response = await authService.register(registerData);
+      const userData: UserData = {
+        email: response.data.user.email,
+        name: response.data.user.name,
+        role: "User",
+        subscription: "Free Plan",
+        joinDate: new Date(response.data.user.createdAt).toLocaleDateString(
+          "en-US",
+          { month: "long", year: "numeric" }
+        ),
+      };
+      setUser(userData);
+      setIsLoggedIn(true);
+      setError("");
+      navigate("/profile");
+    } catch (error: unknown) {
+      const apiError = error as ApiError;
+      setError(
+        apiError.response?.data?.message ||
+          apiError.message ||
+          "Registration failed. Please try again."
+      );
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleLogout = () => {
+    authService.logout();
     setIsLoggedIn(false);
     setUser(null);
-    setForm({ email: "", password: "", name: "" });
-    setIsRegistering(false);
+    navigate("/profile");
+  };
+
+  const toggleAuthMode = () => {
+    setIsRegistering(!isRegistering);
+    setError("");
+  };
+
+  const handleCreateBooking = async (
+    serviceId: string,
+    bookingDate: string
+  ) => {
+    try {
+      setLoading(true);
+      await bookingService.createBooking(serviceId, bookingDate);
+      await fetchBookings();
+    } catch (error) {
+      console.error("Failed to create booking:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleCancelBooking = async (bookingId: string) => {
+    try {
+      setLoading(true);
+      await bookingService.cancelBooking(bookingId);
+      await fetchBookings();
+    } catch (error) {
+      console.error("Failed to cancel booking:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (!isLoggedIn) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-secondary-dark to-primary p-4">
-        <form
-          onSubmit={isRegistering ? handleRegister : handleLogin}
-          className="bg-secondary-dark/50 p-8 rounded-lg w-full max-w-md border border-primary-accent/20"
-        >
-          <h2 className="text-2xl font-semibold text-white mb-6">
-            {isRegistering ? "Register" : "Login"}
-          </h2>
+      <div className="pt-24 pb-16 min-h-screen bg-gradient-to-b from-secondary-dark to-primary">
+        <div className="max-w-md mx-auto px-4">
+          <div className="bg-secondary-dark/50 backdrop-blur-sm rounded-lg p-8 border border-primary-accent/20">
+            <h2 className="text-2xl font-semibold text-neutral-white mb-6">
+              {isRegistering ? "Create Account" : "Welcome Back"}
+            </h2>
 
-          {error && <div className="text-red-500 mb-4">{error}</div>}
+            {error && (
+              <div className="bg-accent-danger/20 text-accent-danger p-4 rounded-lg mb-6">
+                {error}
+              </div>
+            )}
 
-          {isRegistering && (
-            <div className="mb-4">
-              <label className="block text-white/70 mb-2">Full Name</label>
-              <input
-                type="text"
-                value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
-                className="w-full px-4 py-2 rounded-lg bg-secondary-dark border border-primary-accent/20 text-white"
-                required
-              />
-            </div>
-          )}
+            <form
+              onSubmit={isRegistering ? handleRegister : handleLogin}
+              className="space-y-4"
+            >
+              {isRegistering && (
+                <div>
+                  <label
+                    htmlFor="name"
+                    className="block text-sm font-medium text-neutral-white/70 mb-1"
+                  >
+                    Name
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    value={form.name}
+                    onChange={(e) => setForm({ ...form, name: e.target.value })}
+                    className="w-full bg-secondary-dark border border-primary-accent/20 rounded-lg px-4 py-2 text-neutral-white focus:outline-none focus:ring-2 focus:ring-accent-purple"
+                    required
+                  />
+                </div>
+              )}
 
-          <div className="mb-4">
-            <label className="block text-white/70 mb-2">Email</label>
-            <input
-              type="email"
-              value={form.email}
-              onChange={(e) => setForm({ ...form, email: e.target.value })}
-              className="w-full px-4 py-2 rounded-lg bg-secondary-dark border border-primary-accent/20 text-white"
-              required
-            />
+              <div>
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium text-neutral-white/70 mb-1"
+                >
+                  Email
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  value={form.email}
+                  onChange={(e) => setForm({ ...form, email: e.target.value })}
+                  className="w-full bg-secondary-dark border border-primary-accent/20 rounded-lg px-4 py-2 text-neutral-white focus:outline-none focus:ring-2 focus:ring-accent-purple"
+                  required
+                />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-medium text-neutral-white/70 mb-1"
+                >
+                  Password
+                </label>
+                <input
+                  type="password"
+                  id="password"
+                  value={form.password}
+                  onChange={(e) =>
+                    setForm({ ...form, password: e.target.value })
+                  }
+                  className="w-full bg-secondary-dark border border-primary-accent/20 rounded-lg px-4 py-2 text-neutral-white focus:outline-none focus:ring-2 focus:ring-accent-purple"
+                  required
+                />
+              </div>
+
+              <button
+                type="button"
+                onClick={() =>
+                  setForm({
+                    email: "raj.mehra@techmail.in",
+                    password: "secure@123",
+                    name: "Raj Mehra",
+                  })
+                }
+                className="w-full mb-4 bg-accent-teal/20 text-accent-teal px-4 py-2 rounded-lg hover:bg-accent-teal/30 transition"
+              >
+                Autofill Demo User
+              </button>
+
+              <button
+                type="submit"
+                className="w-full bg-gradient-to-r from-accent-purple to-accent-teal text-white px-4 py-2 rounded-lg hover:shadow-lg"
+              >
+                {isRegistering ? "Register" : "Login"}
+              </button>
+
+              <button
+                type="button"
+                onClick={toggleAuthMode}
+                className="mt-4 text-sm text-white/70 hover:text-white underline block text-center"
+              >
+                {isRegistering
+                  ? "Already have an account? Login"
+                  : "Don't have an account? Register"}
+              </button>
+            </form>
           </div>
-
-          <div className="mb-6">
-            <label className="block text-white/70 mb-2">Password</label>
-            <input
-              type="password"
-              value={form.password}
-              onChange={(e) => setForm({ ...form, password: e.target.value })}
-              className="w-full px-4 py-2 rounded-lg bg-secondary-dark border border-primary-accent/20 text-white"
-              required
-            />
-          </div>
-
-          <button
-            type="button"
-            onClick={() =>
-              setForm({
-                email: sampleUser.email,
-                password: sampleUser.password,
-                name: sampleUser.name,
-              })
-            }
-            className="w-full mb-4 bg-accent-teal/20 text-accent-teal px-4 py-2 rounded-lg hover:bg-accent-teal/30 transition"
-          >
-            Autofill Demo User
-          </button>
-
-          <button
-            type="submit"
-            className="w-full bg-gradient-to-r from-accent-purple to-accent-teal text-white px-4 py-2 rounded-lg hover:shadow-lg"
-          >
-            {isRegistering ? "Register" : "Login"}
-          </button>
-
-          <button
-            type="button"
-            onClick={toggleAuthMode}
-            className="mt-4 text-sm text-white/70 hover:text-white underline block text-center"
-          >
-            {isRegistering
-              ? "Already have an account? Login"
-              : "Don't have an account? Register"}
-          </button>
-        </form>
+        </div>
       </div>
     );
   }
@@ -163,13 +327,206 @@ export function AuthProfile() {
     {
       icon: <User className="w-5 h-5" />,
       label: "Account Details",
-      active: true,
+      id: "account",
     },
-    { icon: <Shield className="w-5 h-5" />, label: "Security" },
-    { icon: <Bell className="w-5 h-5" />, label: "Notifications" },
-    { icon: <CreditCard className="w-5 h-5" />, label: "Billing" },
-    { icon: <Settings className="w-5 h-5" />, label: "Preferences" },
+    {
+      icon: <Calendar className="w-5 h-5" />,
+      label: "Bookings",
+      id: "bookings",
+      badge: bookings.length,
+    },
+    {
+      icon: <CreditCard className="w-5 h-5" />,
+      label: "Billing",
+      id: "billing",
+    },
   ];
+
+  const renderAccountDetails = () => (
+    <div className="bg-secondary-dark/50 backdrop-blur-sm rounded-lg p-8 border border-primary-accent/20">
+      <h2 className="text-2xl font-semibold text-neutral-white mb-6">
+        Account Details
+      </h2>
+
+      <div className="space-y-4">
+        <div>
+          <label className="block text-sm font-medium text-neutral-white/70 mb-1">
+            Name
+          </label>
+          <p className="text-neutral-white">{user?.name}</p>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-neutral-white/70 mb-1">
+            Email
+          </label>
+          <p className="text-neutral-white">{user?.email}</p>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-neutral-white/70 mb-1">
+            Role
+          </label>
+          <p className="text-neutral-white">{user?.role}</p>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-neutral-white/70 mb-1">
+            Subscription
+          </label>
+          <p className="text-neutral-white">{user?.subscription}</p>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-neutral-white/70 mb-1">
+            Member Since
+          </label>
+          <p className="text-neutral-white">{user?.joinDate}</p>
+        </div>
+
+        <button
+          onClick={handleLogout}
+          className="mt-6 flex items-center space-x-2 text-accent-danger/70 hover:text-accent-danger transition-colors"
+        >
+          <LogOut className="w-5 h-5" />
+          <span>Logout</span>
+        </button>
+      </div>
+    </div>
+  );
+
+  const renderBookings = () => (
+    <div className="bg-secondary-dark/50 backdrop-blur-sm rounded-lg p-8 border border-primary-accent/20">
+      <h2 className="text-2xl font-semibold text-neutral-white mb-6">
+        Your Bookings & Submissions
+      </h2>
+
+      {bookings.length === 0 ? (
+        <div className="text-center py-8">
+          <Calendar className="w-16 h-16 text-neutral-white/30 mx-auto mb-4" />
+          <p className="text-neutral-white/70 mb-4">
+            You don't have any bookings or submissions yet
+          </p>
+          <button
+            onClick={() => setActiveTab("services")}
+            className="bg-accent-teal/20 text-accent-teal px-4 py-2 rounded-lg hover:bg-accent-teal/30 transition"
+          >
+            Browse Services
+          </button>
+        </div>
+      ) : (
+        <div className="space-y-4">
+          {bookings.map((booking) => (
+            <div
+              key={booking._id}
+              className="bg-secondary-dark p-4 rounded-lg border border-primary-accent/10 text-white"
+            >
+              <div className="flex justify-between items-start">
+                <div>
+                  <p className="font-semibold">{booking.serviceName}</p>
+                  <p className="text-white/70 text-sm">
+                    Date: {new Date(booking.bookingDate).toLocaleDateString()}
+                  </p>
+                  {booking.price > 0 && (
+                    <p className="text-white/70 text-sm">
+                      Price: ${booking.price.toFixed(2)}
+                    </p>
+                  )}
+                  {booking.notes && (
+                    <p className="text-white/70 text-sm mt-2">
+                      {booking.notes}
+                    </p>
+                  )}
+                </div>
+                <div className="flex flex-col items-end">
+                  <span
+                    className={`px-2 py-1 rounded text-xs ${
+                      booking.status === "confirmed"
+                        ? "bg-green-500/20 text-green-400"
+                        : booking.status === "pending"
+                        ? "bg-yellow-500/20 text-yellow-400"
+                        : booking.status === "cancelled"
+                        ? "bg-red-500/20 text-red-400"
+                        : "bg-blue-500/20 text-blue-400"
+                    }`}
+                  >
+                    {booking.status.charAt(0).toUpperCase() +
+                      booking.status.slice(1)}
+                  </span>
+                  {booking.status === "pending" && (
+                    <button
+                      onClick={() => handleCancelBooking(booking._id)}
+                      className="mt-2 text-accent-danger/70 hover:text-accent-danger text-sm"
+                      disabled={loading}
+                    >
+                      Cancel
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+
+  const renderServices = () => (
+    <div className="bg-secondary-dark/50 backdrop-blur-sm rounded-lg p-8 border border-primary-accent/20">
+      <h2 className="text-2xl font-semibold text-neutral-white mb-6">
+        Available Services
+      </h2>
+
+      {services.length === 0 ? (
+        <div className="text-center py-8">
+          <p className="text-neutral-white/70">
+            No services available at the moment
+          </p>
+        </div>
+      ) : (
+        <div className="grid md:grid-cols-2 gap-6">
+          {services.map((service) => (
+            <div
+              key={service._id}
+              className="bg-secondary-dark p-4 rounded-lg border border-primary-accent/10 text-white"
+            >
+              <h3 className="font-semibold text-lg mb-2">{service.name}</h3>
+              <p className="text-white/70 text-sm mb-4">
+                {service.description}
+              </p>
+              <div className="flex justify-between items-center">
+                <span className="text-accent-teal">
+                  ${service.price.toFixed(2)}
+                </span>
+                <button
+                  onClick={() =>
+                    handleCreateBooking(service._id, new Date().toISOString())
+                  }
+                  className="bg-accent-purple/20 text-accent-purple px-3 py-1 rounded-lg hover:bg-accent-purple/30 transition"
+                  disabled={loading}
+                >
+                  Book Now
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+
+  const renderContent = () => {
+    switch (activeTab) {
+      case "account":
+        return renderAccountDetails();
+      case "bookings":
+        return renderBookings();
+      case "services":
+        return renderServices();
+      default:
+        return renderAccountDetails();
+    }
+  };
 
   return (
     <div className="pt-24 pb-16 min-h-screen bg-gradient-to-b from-secondary-dark to-primary">
@@ -189,104 +546,31 @@ export function AuthProfile() {
               </div>
 
               <nav className="space-y-2">
-                {menuItems.map((item, index) => (
+                {menuItems.map((item) => (
                   <button
-                    key={index}
-                    className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${
-                      item.active
-                        ? "bg-primary-accent/20 text-accent-teal"
-                        : "text-neutral-white/70 hover:bg-primary-accent/10 hover:text-neutral-white"
+                    key={item.id}
+                    onClick={() => setActiveTab(item.id)}
+                    className={`w-full flex items-center space-x-3 px-4 py-2 rounded-lg transition-colors ${
+                      activeTab === item.id
+                        ? "bg-accent-purple/20 text-accent-purple"
+                        : "text-neutral-white/70 hover:text-neutral-white hover:bg-primary-accent/10"
                     }`}
                   >
                     {item.icon}
                     <span>{item.label}</span>
+                    {item.badge !== undefined && (
+                      <span className="ml-auto bg-accent-purple/20 text-accent-purple px-2 py-0.5 rounded-full text-xs">
+                        {item.badge}
+                      </span>
+                    )}
                   </button>
                 ))}
-                <button
-                  onClick={handleLogout}
-                  className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-accent-danger/70 hover:text-accent-danger hover:bg-accent-danger/10 transition-colors"
-                >
-                  <LogOut className="w-5 h-5" />
-                  <span>Sign Out</span>
-                </button>
               </nav>
             </div>
           </div>
 
           {/* Main Content */}
-          <div className="md:col-span-3 space-y-8">
-            <div className="bg-secondary-dark/50 backdrop-blur-sm rounded-lg p-8 border border-primary-accent/20">
-              <h2 className="text-2xl font-semibold text-neutral-white mb-6">
-                Account Details
-              </h2>
-              <div className="grid md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-medium text-neutral-white/70 mb-2">
-                    Full Name
-                  </label>
-                  <input
-                    type="text"
-                    value={user?.name}
-                    readOnly
-                    className="w-full bg-secondary-dark border border-primary-accent/20 rounded-lg px-4 py-2 text-neutral-white"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-neutral-white/70 mb-2">
-                    Email Address
-                  </label>
-                  <input
-                    type="email"
-                    value={user?.email}
-                    readOnly
-                    className="w-full bg-secondary-dark border border-primary-accent/20 rounded-lg px-4 py-2 text-neutral-white"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-neutral-white/70 mb-2">
-                    Subscription Plan
-                  </label>
-                  <input
-                    type="text"
-                    value={user?.subscription}
-                    disabled
-                    className="w-full bg-secondary-dark border border-primary-accent/20 rounded-lg px-4 py-2 text-neutral-white/70"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-neutral-white/70 mb-2">
-                    Member Since
-                  </label>
-                  <input
-                    type="text"
-                    value={user?.joinDate}
-                    disabled
-                    className="w-full bg-secondary-dark border border-primary-accent/20 rounded-lg px-4 py-2 text-neutral-white/70"
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-secondary-dark/50 backdrop-blur-sm rounded-lg p-8 border border-primary-accent/20">
-              <h2 className="text-2xl font-semibold text-neutral-white mb-4">
-                Your Bookings
-              </h2>
-              <div className="space-y-4">
-                <div className="bg-secondary-dark p-4 rounded-lg border border-primary-accent/10 text-white">
-                  <p className="font-semibold">
-                    Security Audit - April 15, 2024
-                  </p>
-                  <p className="text-white/70 text-sm">Status: Confirmed</p>
-                </div>
-                <div className="bg-secondary-dark p-4 rounded-lg border border-primary-accent/10 text-white">
-                  <p className="font-semibold">
-                    Consultation Call - April 18, 2024
-                  </p>
-                  <p className="text-white/70 text-sm">Status: Pending</p>
-                </div>
-              </div>
-            </div>
-          </div>
+          <div className="md:col-span-3">{renderContent()}</div>
         </div>
       </div>
     </div>

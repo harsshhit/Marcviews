@@ -1,4 +1,6 @@
 // src/components/Appointments.tsx
+import { useState } from "react";
+import { AppointmentModal } from "./AppointmentModal";
 
 const services = [
   {
@@ -36,25 +38,48 @@ const services = [
 ];
 
 export function Appointments() {
+  const [selectedService, setSelectedService] = useState<
+    (typeof services)[0] | null
+  >(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleContinue = (service: (typeof services)[0]) => {
+    setSelectedService(service);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedService(null);
+  };
+
   return (
     <div className="min-h-screen bg-primary text-white p-8 pt-24 max-w-4xl mx-auto">
-      <h1 className="text-3xl font-bold mb-6">Appointments</h1>
+      <div className="mb-12 text-center">
+        <h1 className="text-4xl font-bold mb-4">Book Your Appointment</h1>
+        <p className="text-white/70 text-lg">
+          Choose from our range of professional services
+        </p>
+      </div>
 
       <div className="grid gap-6">
         {services.map((s, index) => (
           <div
             key={index}
-            className="bg-secondary-dark p-6 rounded-lg border border-primary-accent/20"
+            className="bg-secondary-dark/50 backdrop-blur-sm p-6 rounded-lg border border-primary-accent/20 hover:border-primary-accent/40 transition-colors duration-300"
           >
             <div className="flex justify-between items-center">
-              <div>
-                <p className="text-xl font-semibold">{s.title}</p>
+              <div className="space-y-2">
+                <p className="text-xl font-semibold text-white">{s.title}</p>
                 <p className="text-white/70 text-sm">{s.duration}</p>
               </div>
-              <div className="text-right">
-                <p className="font-semibold">{s.price}</p>
-                <button className="mt-2 px-4 py-1 bg-accent-teal rounded-lg hover:bg-accent-purple transition text-white">
-                  Continue
+              <div className="text-right space-y-2">
+                <p className="font-semibold text-accent-teal">{s.price}</p>
+                <button
+                  onClick={() => handleContinue(s)}
+                  className="px-6 py-2 bg-accent-teal text-white rounded-lg hover:bg-accent-teal/90 transition-colors duration-300"
+                >
+                  Book Now
                 </button>
               </div>
             </div>
@@ -62,19 +87,27 @@ export function Appointments() {
         ))}
       </div>
 
-      <div className="mt-10 text-center">
-        <h2 className="text-2xl font-bold mb-2">Make the payment here!</h2>
-        <p className="mb-4">
+      <div className="mt-16 text-center bg-secondary-dark/50 backdrop-blur-sm p-8 rounded-lg border border-primary-accent/20">
+        <h2 className="text-2xl font-bold mb-4">Payment Information</h2>
+        <p className="mb-4 text-white/70">
           Online Payment:{" "}
           <a
             href="https://pay.marcviews.com/"
-            className="underline text-accent-teal"
+            className="text-accent-teal hover:text-accent-teal/80 transition-colors duration-300"
           >
             https://pay.marcviews.com/
           </a>
         </p>
-        <p>PayPal: Scan or use your PayPal account</p>
+        <p className="text-white/70">PayPal: Scan or use your PayPal account</p>
       </div>
+
+      {isModalOpen && selectedService && (
+        <AppointmentModal
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          service={selectedService}
+        />
+      )}
     </div>
   );
 }

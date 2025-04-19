@@ -1,6 +1,8 @@
 // src/components/Blogs.tsx
 
-const blogPosts = [
+import { Link } from "react-router-dom";
+
+export const blogPosts = [
   {
     date: "February 19, 2025",
     categories:
@@ -68,57 +70,52 @@ const blogPosts = [
 
 export function Blogs() {
   return (
-    <div className="min-h-screen pt-24 px-4 pb-16 bg-primary text-white max-w-5xl mx-auto">
-      <h1 className="text-4xl font-bold mb-8">Blogs</h1>
-
-      <div className="grid gap-8">
-        {blogPosts.map((post, idx) => (
-          <div
-            key={idx}
-            className="bg-secondary-dark p-6 rounded-lg border border-white/10 shadow hover:shadow-lg transition"
-          >
-            <div className="text-sm text-accent-teal mb-1">{post.date}</div>
-            <div className="text-white/70 text-xs italic mb-2">
-              {post.categories}
-            </div>
-            <h2 className="text-xl font-semibold mb-2">{post.title}</h2>
-            <p className="text-white/80 text-sm mb-3">{post.author}</p>
-            <button className="text-accent-purple underline hover:text-white transition">
-              Continue Reading
-            </button>
-          </div>
-        ))}
-      </div>
-
-      <div className="mt-16 border-t border-white/10 pt-8">
-        <h3 className="text-2xl font-semibold mb-4">
-          Subscribe to our Newsletter
-        </h3>
-        <p className="text-white/80 mb-4">
-          Stay ahead of the curve with MarcViews Networks and subscribe to our
-          monthly newsletter to get exclusive updates on the latest
-          cybersecurity trends, expert tips to fortify your defenses, and
-          insights that keep you informed about emerging threats. Join our
-          community of proactive individuals and businesses dedicated to staying
-          secure in an ever-evolving digital landscape.
-          <br />
-          <br />
-          Your safety is our priority, and together, we can outsmart the
-          hackers.
-        </p>
-        <div className="flex gap-2">
-          <input
-            type="email"
-            placeholder="Email"
-            className="p-3 rounded bg-white/10 border border-white/20 w-full"
-          />
-          <button className="bg-accent-teal px-5 py-3 rounded hover:bg-accent-purple transition">
-            Sign up
-          </button>
+    <div className="min-h-screen pt-24 px-6 pb-16 bg-gradient-to-b from-primary to-secondary-dark text-white">
+      <div className="max-w-5xl mx-auto space-y-12">
+        {/* Hero Section */}
+        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-primary-accent/20 to-accent-purple/20 p-8 backdrop-blur-sm">
+          <div className="absolute inset-0 bg-[url('/pattern.png')] opacity-10" />
+          <h1 className="text-5xl font-bold bg-gradient-to-r from-accent-teal to-accent-purple bg-clip-text text-transparent mb-4">
+            Blogs
+          </h1>
+          <p className="text-xl text-white/90">
+            Insights, analysis, and expert perspectives on cybersecurity
+          </p>
         </div>
-        <p className="text-xs text-white/60 mt-2">
-          You can unsubscribe at any time with just a click.
-        </p>
+
+        {/* Blog Posts Grid */}
+        <div className="grid gap-8">
+          {blogPosts.map((post, idx) => (
+            <div
+              key={idx}
+              className="bg-primary-accent/10 rounded-xl p-8 backdrop-blur-sm hover:bg-primary-accent/20 transition-colors duration-300"
+            >
+              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
+                <div className="text-sm text-accent-teal">{post.date}</div>
+                <div className="flex flex-wrap gap-2">
+                  {post.categories.split(", ").map((category, i) => (
+                    <span
+                      key={i}
+                      className="px-3 py-1 text-xs rounded-full bg-accent-purple/10 text-accent-purple"
+                    >
+                      {category}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <h2 className="text-2xl font-bold mb-3">{post.title}</h2>
+              <p className="text-white/90 mb-6">{post.author}</p>
+              <Link
+                to={`/company/blogs/${post.title
+                  .toLowerCase()
+                  .replace(/[^a-z0-9]+/g, "-")}`}
+                className="inline-flex items-center px-6 py-3 bg-accent-teal/10 text-accent-teal rounded-lg hover:bg-accent-teal/20 transition-colors duration-300"
+              >
+                Continue Reading
+              </Link>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
