@@ -27,9 +27,16 @@ api.interceptors.response.use(
     // Handle 401 Unauthorized errors (token expired or invalid)
     if (error.response && error.response.status === 401) {
       localStorage.removeItem("token");
-      // Redirect to profile page if not already there
-      if (window.location.pathname !== "/profile") {
-        window.location.href = "/profile";
+      localStorage.removeItem("rememberMe");
+      // Redirect to login page if not already there
+      if (window.location.pathname !== "/login") {
+        window.location.href = "/login";
+      }
+    }
+    // Handle 403 Forbidden errors (email not verified)
+    if (error.response && error.response.status === 403) {
+      if (window.location.pathname !== "/verify-email") {
+        window.location.href = "/verify-email";
       }
     }
     return Promise.reject(error);

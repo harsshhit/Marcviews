@@ -5,12 +5,14 @@ import { servicesData } from "./services/services";
 import { solutionsData } from "./solutions/solutions";
 import { aiData } from "./ai/ai";
 import { contactData } from "../data/contact";
+import { useAuth } from "../context/AuthContext";
 
 export function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const { isAuthenticated, user, logout } = useAuth();
 
   // Create navigation data from route data
   const navigationData = [
@@ -65,6 +67,11 @@ export function Navigation() {
       ],
     },
   ];
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
 
   return (
     <nav className="bg-primary shadow-lg fixed w-full z-50 backdrop-blur-md top-0">
@@ -124,16 +131,43 @@ export function Navigation() {
             ))}
 
             <div className="flex items-center space-x-4">
-              <button
-                onClick={() => navigate("/profile")}
-                className={`text-neutral-white/80 hover:text-neutral-white transition-colors p-2 rounded-full hover:bg-primary-light ${
-                  location.pathname === "/profile"
-                    ? "text-neutral-white bg-primary-light"
-                    : ""
-                }`}
-              >
-                <User className="h-6 w-6" />
-              </button>
+              {isAuthenticated ? (
+                <>
+                  <span className="text-neutral-white">
+                    Welcome, {user?.name}
+                  </span>
+                  <Link
+                    to="/profile"
+                    className="text-neutral-white hover:text-neutral-white transition-colors p-2 rounded-full hover:bg-primary-light"
+                  >
+                    <User className="h-6 w-6" />
+                  </Link>
+                  <button
+                    onClick={() => {
+                      handleLogout();
+                      setIsMenuOpen(false);
+                    }}
+                    className="text-neutral-white hover:text-neutral-white p-2 rounded-full hover:bg-primary-light"
+                  >
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link
+                    to="/login"
+                    className="text-neutral-white hover:text-neutral-white transition-colors p-2 rounded-full hover:bg-primary-light"
+                  >
+                    Login
+                  </Link>
+                  <Link
+                    to="/register"
+                    className="bg-primary text-white p-2 rounded-full hover:bg-primary-dark"
+                  >
+                    Register
+                  </Link>
+                </>
+              )}
             </div>
           </div>
 
@@ -209,13 +243,44 @@ export function Navigation() {
         </div>
 
         <div className="flex space-x-4 px-4 py-3">
-          <Link
-            to="/profile"
-            className="text-neutral-white/80 hover:text-neutral-white p-2 rounded-full hover:bg-primary-light transition-colors"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            <User className="h-6 w-6" />
-          </Link>
+          {isAuthenticated ? (
+            <>
+              <div className="text-neutral-white">Welcome, {user?.name}</div>
+              <Link
+                to="/profile"
+                className="text-neutral-white hover:text-neutral-white p-2 rounded-full hover:bg-primary-light"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <User className="h-6 w-6" />
+              </Link>
+              <button
+                onClick={() => {
+                  handleLogout();
+                  setIsMenuOpen(false);
+                }}
+                className="text-neutral-white hover:text-neutral-white p-2 rounded-full hover:bg-primary-light"
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <Link
+                to="/login"
+                className="text-neutral-white hover:text-neutral-white p-2 rounded-full hover:bg-primary-light"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Login
+              </Link>
+              <Link
+                to="/register"
+                className="bg-primary text-white p-2 rounded-full hover:bg-primary-dark"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Register
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </nav>

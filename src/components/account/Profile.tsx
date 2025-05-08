@@ -1,12 +1,9 @@
 import React, { useState, FormEvent, useEffect } from "react";
 import { User, CreditCard, LogOut, Calendar } from "lucide-react";
-import authService, {
-  LoginData,
-  RegisterData,
-} from "../../services/authService";
 import bookingService, { Booking } from "../../services/bookingService";
 import serviceService, { Service } from "../../services/serviceService";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 interface UserData {
   email: string;
@@ -33,7 +30,14 @@ interface ApiError {
 
 export function AuthProfile() {
   const navigate = useNavigate();
-  const [isLoggedIn, setIsLoggedIn] = useState(authService.isAuthenticated());
+  const {
+    isAuthenticated,
+    user: authUser,
+    login,
+    register,
+    logout,
+  } = useAuth();
+  const [isLoggedIn, setIsLoggedIn] = useState(isAuthenticated);
   const [form, setForm] = useState<FormData>({
     email: "",
     password: "",
@@ -48,39 +52,27 @@ export function AuthProfile() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (isLoggedIn) {
-      checkAuthStatus();
+    if (!isAuthenticated) {
+      navigate("/login");
+      return;
     }
-  }, [isLoggedIn]);
-
-  const checkAuthStatus = async () => {
-    try {
-      setLoading(true);
-      const response = await authService.getCurrentUser();
+    if (isAuthenticated && authUser) {
       const userData: UserData = {
-        email: response.data.user.email,
-        name: response.data.user.name,
+        email: authUser.email,
+        name: authUser.name,
         role: "User",
         subscription: "Free Plan",
-        joinDate: new Date(response.data.user.createdAt).toLocaleDateString(
-          "en-US",
-          { month: "long", year: "numeric" }
-        ),
+        joinDate: new Date(authUser.createdAt).toLocaleDateString("en-US", {
+          month: "long",
+          year: "numeric",
+        }),
       };
       setUser(userData);
       setIsLoggedIn(true);
-
-      // Fetch bookings and services
-      await Promise.all([fetchBookings(), fetchServices()]);
-    } catch (error) {
-      console.error("Auth check failed:", error);
-      authService.logout();
-      setIsLoggedIn(false);
-      setUser(null);
-    } finally {
-      setLoading(false);
+      fetchBookings();
+      fetchServices();
     }
-  };
+  }, [isAuthenticated, authUser, navigate]);
 
   const fetchBookings = async () => {
     try {
@@ -105,24 +97,7 @@ export function AuthProfile() {
     setError("");
     setLoading(true);
     try {
-      const loginData: LoginData = {
-        email: form.email,
-        password: form.password,
-      };
-      const response = await authService.login(loginData);
-      const userData: UserData = {
-        email: response.data.user.email,
-        name: response.data.user.name,
-        role: "User",
-        subscription: "Free Plan",
-        joinDate: new Date(response.data.user.createdAt).toLocaleDateString(
-          "en-US",
-          { month: "long", year: "numeric" }
-        ),
-      };
-      setUser(userData);
-      setIsLoggedIn(true);
-      setError("");
+      await login(form.email, form.password);
       navigate("/profile");
     } catch (error: unknown) {
       const apiError = error as ApiError;
@@ -141,25 +116,7 @@ export function AuthProfile() {
     setError("");
     setLoading(true);
     try {
-      const registerData: RegisterData = {
-        email: form.email,
-        password: form.password,
-        name: form.name,
-      };
-      const response = await authService.register(registerData);
-      const userData: UserData = {
-        email: response.data.user.email,
-        name: response.data.user.name,
-        role: "User",
-        subscription: "Free Plan",
-        joinDate: new Date(response.data.user.createdAt).toLocaleDateString(
-          "en-US",
-          { month: "long", year: "numeric" }
-        ),
-      };
-      setUser(userData);
-      setIsLoggedIn(true);
-      setError("");
+      await register(form.name, form.email, form.password, form.password);
       navigate("/profile");
     } catch (error: unknown) {
       const apiError = error as ApiError;
@@ -174,10 +131,8 @@ export function AuthProfile() {
   };
 
   const handleLogout = () => {
-    authService.logout();
-    setIsLoggedIn(false);
-    setUser(null);
-    navigate("/profile");
+    logout();
+    navigate("/");
   };
 
   const toggleAuthMode = () => {

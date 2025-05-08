@@ -27,6 +27,8 @@ import { Appointments } from "./components/contact/Appointments";
 import { ContactUs } from "./components/contact/ContactUs";
 import { AuthProfile } from "./components/account/Profile";
 import { BlogPost } from "./components/company/BlogPost";
+import Login from "./components/auth/Login";
+import Register from "./components/auth/Register";
 
 const router = createBrowserRouter(
   [
@@ -49,6 +51,8 @@ const router = createBrowserRouter(
                       </>
                     }
                   />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/register" element={<Register />} />
                   {Object.entries(servicesData).map(([key, data]) => (
                     <Route
                       key={key}
