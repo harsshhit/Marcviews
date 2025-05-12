@@ -4,11 +4,10 @@ import {
   Activity,
   // Link,
 } from "lucide-react";
-import { motion } from "framer-motion"; 
+import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
 export function SecurityFeatures() {
-
   const features = [
     {
       icon: <Shield className="h-12 w-12 text-red-500" />,
@@ -32,8 +31,6 @@ export function SecurityFeatures() {
     },
   ];
 
- 
-
   return (
     <div className="py-20 bg-gradient-to-b from-white via-gray-50 to-white">
       <div className="max-w-7xl mx-auto px-4">
@@ -46,7 +43,7 @@ export function SecurityFeatures() {
         >
           <h2 className="heading-2 mb-4">
             Multi-layered,{" "}
-            <span className="bg-gradient-to-r from-red-500 to-red-700 bg-clip-text text-transparent ">
+            <span className="bg-gradient-to-r from-red-500 to-red-700 bg-clip-text text-transparent">
               AI-powered
             </span>
             , End-to-end security
@@ -61,22 +58,29 @@ export function SecurityFeatures() {
           {features.map((feature, index) => (
             <motion.div
               key={index}
-              className="card card-hover card-stagger group"
-              style={{ animationDelay: `${index * 100}ms` }}
+              className="rounded-3xl backdrop-blur-sm bg-white/30 border border-gray-200 shadow-2xl p-8 transform transition-all duration-500 group hover:scale-[1.03] hover:shadow-red-200"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
               viewport={{ once: true }}
             >
-              <div className="p-8">
-                <div className="mb-6 transform group-hover:scale-110 transition-transform duration-300">
+              <div className="flex justify-center items-center mb-6">
+                <motion.div
+                  className="p-4 rounded-full bg-red-100 shadow-md hover:shadow-red-300 transition duration-300 group-hover:scale-110"
+                  animate={{ y: [0, -5, 0] }}
+                  transition={{ repeat: Infinity, duration: 2 }}
+                >
                   {feature.icon}
-                </div>
-                <h3 className="heading-3 mb-3">{feature.title}</h3>
-                <p className="text-slate-600 leading-relaxed mb-4 font- bold">
-                  {feature.description}
-                </p>
-                <div className="text-gray-500  text-sm">{feature.stats}</div>
+                </motion.div>
+              </div>
+              <h3 className="text-xl font-semibold text-gray-800 mb-2 text-center">
+                {feature.title}
+              </h3>
+              <p className="text-slate-600 text-center mb-4 leading-relaxed">
+                {feature.description}
+              </p>
+              <div className="text-center text-sm font-medium text-gray-500">
+                {feature.stats}
               </div>
             </motion.div>
           ))}
@@ -90,7 +94,7 @@ export function SecurityFeatures() {
           viewport={{ once: true }}
         >
           <Link to="/contact/appointmentform">
-            <button className="bg-black text-white rounded-full hover:bg-red-600 transition-colors duration-300 px-8 py-4 text-lg">
+            <button className="bg-black text-white rounded-full hover:bg-red-600 transition-colors duration-300 px-8 py-4 text-lg shadow-lg hover:shadow-red-300">
               Book a Consultative Call
             </button>
           </Link>
