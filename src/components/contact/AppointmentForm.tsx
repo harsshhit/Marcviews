@@ -4,27 +4,19 @@ import type { AppointmentFormData } from "../../services/formService";
 import { useApp } from "../../context/AppContext";
 import { useAuth } from "../../context/AuthContext";
 
-interface AppointmentModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  service: {
-    _id: string;
-    title: string;
-    duration: string;
-    price: string;
-  };
-}
+// Sample service data
+const sampleService = {
+  _id: "consultation-001",
+  title: "Security Consultation",
+  duration: "30 mins",
+  price: "Free"
+};
 
-export function AppointmentModal({
-  isOpen,
-  onClose,
-  service,
-}: AppointmentModalProps) {
+export function AppointmentForm() {
   const { showNotification } = useApp();
   const { user } = useAuth();
-  const [formData, setFormData] = useState<
-    Omit<AppointmentFormData, "service">
-  >({
+
+  const [formData, setFormData] = useState<Omit<AppointmentFormData, "service">>({
     name: user?.name || "",
     email: user?.email || "",
     phone: "",
@@ -33,6 +25,7 @@ export function AppointmentModal({
     notes: "",
     userId: user?.id,
   });
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -44,13 +37,23 @@ export function AppointmentModal({
     try {
       await formService.submitAppointment({
         ...formData,
-        service,
+        service: sampleService,
       });
       showNotification({
         type: "success",
         message: "Appointment booked successfully!",
       });
-      onClose();
+
+      // Reset form after success
+      setFormData({
+        name: user?.name || "",
+        email: user?.email || "",
+        phone: "",
+        date: "",
+        time: "",
+        notes: "",
+        userId: user?.id,
+      });
     } catch (err) {
       const errorMessage =
         err instanceof Error
@@ -66,38 +69,15 @@ export function AppointmentModal({
     }
   };
 
-  if (!isOpen) return null;
-
   return (
-    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
-      <div className="bg-primary p-6 rounded-lg w-full max-w-md relative">
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 text-white/70 hover:text-white"
-        >
-          <svg
-            className="w-6 h-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
-        </button>
-
-        <h2 className="text-xl font-semibold text-white mb-4">
-          Book Appointment
-        </h2>
+    <div className="min-h-screen flex items-center justify-center bg-background py-10 px-4">
+      <div className="bg-primary p-6 rounded-lg w-full max-w-lg">
+        <h2 className="text-2xl font-bold text-white mb-4">Book Appointment</h2>
 
         <div className="mb-4 p-4 bg-secondary-dark/50 rounded-lg">
-          <h3 className="font-medium text-white">{service.title}</h3>
+          <h3 className="font-medium text-white">{sampleService.title}</h3>
           <p className="text-white/70 text-sm">
-            Duration: {service.duration} | Price: ${service.price}
+            Duration: {sampleService.duration} | Price: {sampleService.price}
           </p>
         </div>
 

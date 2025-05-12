@@ -11,7 +11,7 @@ export function BlogPost() {
     return (
       <div className="min-h-screen pt-24 px-6 pb-16 bg-gradient-to-b from-primary to-secondary-dark text-white">
         <div className="max-w-5xl mx-auto">
-          <h1 className="text-3xl font-bold text-accent-teal mb-4">
+          <h1 className="text-3xl font-bold text-red-500 mb-4">
             Blog Post Not Found
           </h1>
           <p className="text-white/90">
@@ -27,12 +27,12 @@ export function BlogPost() {
       <div className="max-w-5xl mx-auto space-y-8">
         <div className="bg-primary-accent/10 rounded-xl p-8 backdrop-blur-sm">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
-            <div className="text-sm text-accent-teal">{post.date}</div>
+            <div className="text-sm text-red-500">{post.date}</div>
             <div className="flex flex-wrap gap-2">
               {post.categories.split(", ").map((category, i) => (
                 <span
                   key={i}
-                  className="px-3 py-1 text-xs rounded-full bg-accent-purple/10 text-accent-purple"
+                  className="px-3 py-1 text-xs rounded-full bg-accent-purple/10 text-red-500"
                 >
                   {category}
                 </span>

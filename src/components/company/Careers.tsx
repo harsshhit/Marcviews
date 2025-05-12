@@ -89,7 +89,7 @@ export function Careers() {
         <div className="grid md:grid-cols-2 gap-12">
           {/* Current Openings Section */}
           <div className="space-y-6">
-            <h2 className="text-3xl font-bold text-accent-teal">
+            <h2 className="text-3xl font-bold text-red-500">
               Current Openings
             </h2>
             <div className="space-y-6">
@@ -141,9 +141,7 @@ export function Careers() {
 
           {/* Application Form Section */}
           <div className="bg-primary-accent/10 rounded-xl p-8 backdrop-blur-sm">
-            <h2 className="text-3xl font-bold text-accent-teal mb-6">
-              Apply Now
-            </h2>
+            <h2 className="text-3xl font-bold text-red-500 mb-6">Apply Now</h2>
 
             {error && (
               <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-500">

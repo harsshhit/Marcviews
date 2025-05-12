@@ -1,4 +1,3 @@
-
 export function AboutUs() {
   return (
     <div className="min-h-screen pt-24 px-6 pb-16 bg-gradient-to-b from-primary to-secondary-dark text-white">
@@ -37,7 +36,7 @@ export function AboutUs() {
         {/* Benefits Section */}
         <div className="grid md:grid-cols-2 gap-8">
           <div className="bg-primary-accent/10 rounded-xl p-6 backdrop-blur-sm">
-            <h2 className="text-2xl font-semibold mb-4 text-accent-teal">
+            <h2 className="text-2xl font-semibold mb-4 text-red-500">
               Benefits you get:
             </h2>
             <ul className="space-y-3">
@@ -56,7 +55,7 @@ export function AboutUs() {
           </div>
 
           <div className="bg-primary-accent/10 rounded-xl p-6 backdrop-blur-sm">
-            <h2 className="text-2xl font-semibold mb-4 text-accent-teal">
+            <h2 className="text-2xl font-semibold mb-4 text-red-500">
               Why us?
             </h2>
             <p className="text-white/90 leading-relaxed">
@@ -74,7 +73,7 @@ export function AboutUs() {
         {/* Mission & Vision Section */}
         <div className="grid md:grid-cols-2 gap-8">
           <div className="bg-primary-accent/10 rounded-xl p-6 backdrop-blur-sm">
-            <h2 className="text-2xl font-semibold mb-4 text-accent-teal">
+            <h2 className="text-2xl font-semibold mb-4 text-red-500">
               Our Mission
             </h2>
             <p className="text-white/90 leading-relaxed">
@@ -85,7 +84,7 @@ export function AboutUs() {
           </div>
 
           <div className="bg-primary-accent/10 rounded-xl p-6 backdrop-blur-sm">
-            <h2 className="text-2xl font-semibold mb-4 text-accent-teal">
+            <h2 className="text-2xl font-semibold mb-4 text-red-500">
               Our Vision
             </h2>
             <p className="text-white/90 leading-relaxed">
@@ -98,7 +97,7 @@ export function AboutUs() {
 
         {/* Solution Briefs */}
         <div className="bg-primary-accent/10 rounded-xl p-6 backdrop-blur-sm">
-          <h2 className="text-2xl font-semibold mb-4 text-accent-teal">
+          <h2 className="text-2xl font-semibold mb-4 text-red-500">
             Solution Briefs
           </h2>
           <div className="grid md:grid-cols-2 gap-4">
@@ -115,7 +114,7 @@ export function AboutUs() {
               <a
                 key={index}
                 href="#"
-                className="flex items-center text-white/90 hover:text-accent-teal transition-colors duration-300"
+                className="flex items-center text-white/90 hover:text-red-500 transition-colors duration-300"
               >
                 <span className="w-2 h-2 bg-accent-teal rounded-full mr-3" />
                 {solution} (pdf)
@@ -123,8 +122,6 @@ export function AboutUs() {
             ))}
           </div>
         </div>
-
-       
 
         {/* Footer */}
         <footer className="pt-10 border-t border-white/10 text-sm text-white/60">
@@ -140,19 +137,19 @@ export function AboutUs() {
             <div className="flex gap-4">
               <a
                 href="#"
-                className="hover:text-accent-teal transition-colors duration-300"
+                className="hover:text-red-500 transition-colors duration-300"
               >
                 Cookies Notice
               </a>
               <a
                 href="#"
-                className="hover:text-accent-teal transition-colors duration-300"
+                className="hover:text-red-500 transition-colors duration-300"
               >
                 Legal Notice
               </a>
               <a
                 href="#"
-                className="hover:text-accent-teal transition-colors duration-300"
+                className="hover:text-red-500 transition-colors duration-300"
               >
                 Terms of Use
               </a>

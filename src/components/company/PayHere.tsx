@@ -21,9 +21,9 @@ export function PayHere() {
           <div className="bg-primary-accent/10 rounded-xl p-8 backdrop-blur-sm hover:bg-primary-accent/20 transition-colors duration-300">
             <div className="flex items-center gap-4 mb-6">
               <div className="p-3 bg-accent-teal/10 rounded-lg">
-                <CreditCard className="text-accent-teal w-6 h-6" />
+                <CreditCard className="text-red-500 w-6 h-6" />
               </div>
-              <h2 className="text-3xl font-bold text-accent-teal">
+              <h2 className="text-3xl font-bold text-red-500">
                 Online Payment
               </h2>
             </div>
@@ -41,7 +41,7 @@ export function PayHere() {
               </a>
               <div className="flex flex-col items-center">
                 <div className="p-4 bg-white/5 rounded-xl">
-                  <QrCode className="w-24 h-24 text-accent-teal" />
+                  <QrCode className="w-24 h-24 text-red-500" />
                 </div>
                 <p className="text-sm text-white/70 mt-3">
                   Scan this QR to pay

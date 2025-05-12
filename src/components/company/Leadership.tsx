@@ -31,7 +31,7 @@ export function Leadership() {
               </div>
             </div>
             <div className="flex-1">
-              <h2 className="text-3xl font-bold text-accent-teal mb-4">
+              <h2 className="text-3xl font-bold text-red-500 mb-4">
                 Kumar Shanu, CISO
               </h2>
               <p className="text-white/90 text-lg leading-relaxed italic mb-6">
@@ -43,7 +43,7 @@ export function Leadership() {
                 href="https://www.linkedin.com/in/kumarshanu"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center px-6 py-3 bg-accent-teal/10 text-accent-teal rounded-lg hover:bg-accent-teal/20 transition-colors duration-300"
+                className="inline-flex items-center px-6 py-3 bg-accent-teal/10 text-red-500 rounded-lg hover:bg-accent-teal/20 transition-colors duration-300"
               >
                 <Linkedin className="mr-2" /> Connect on LinkedIn
               </a>
@@ -53,9 +53,7 @@ export function Leadership() {
 
         {/* Why Choose Us Section */}
         <div className="space-y-8">
-          <h2 className="text-3xl font-bold text-accent-teal">
-            Why Choose Us?
-          </h2>
+          <h2 className="text-3xl font-bold text-red-500">Why Choose Us?</h2>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {[
               {
@@ -93,7 +91,7 @@ export function Leadership() {
                 key={index}
                 className="bg-primary-accent/10 rounded-xl p-6 backdrop-blur-sm hover:bg-primary-accent/20 transition-colors duration-300"
               >
-                <h3 className="text-xl font-semibold text-accent-teal mb-3">
+                <h3 className="text-xl font-semibold text-red-500 mb-3">
                   {item.title}
                 </h3>
                 <p className="text-white/90 leading-relaxed">

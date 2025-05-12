@@ -21,11 +21,12 @@ export interface ResetPasswordData {
 
 export interface AuthResponse {
   status: string;
-  token: string;
+  token?: string;
   message?: string;
   data: {
     user: {
-      _id: string;
+      _id?: string;
+      id?: string;
       name: string;
       email: string;
       createdAt: string;

@@ -1,72 +1,72 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Shield, ChevronDown, User, Menu, X } from "lucide-react";
-import { servicesData } from "./services/services";
-import { solutionsData } from "./solutions/solutions";
-import { aiData } from "./ai/ai";
-import { contactData } from "../data/contact";
+  // import { servicesData } from "./services/services";
+  // import { solutionsData } from "./solutions/solutions";
+  // import { aiData } from "./ai/ai";
+  // import { contactData } from "../data/contact";
 import { useAuth } from "../context/AuthContext";
 
 export function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  // const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const { isAuthenticated, user, logout } = useAuth();
 
   // Create navigation data from route data
-  const navigationData = [
-    {
-      title: "Services",
-      path: "/services",
-      children: Object.entries(servicesData).map(([key, data]) => ({
-        title: data.title,
-        path: `/services/${key}`,
-      })),
-    },
-    {
-      title: "Solutions",
-      path: "/solutions",
-      children: Object.entries(solutionsData).map(([key, data]) => ({
-        title: data.title,
-        path: `/solutions/${key}`,
-      })),
-    },
-    {
-      title: "AI",
-      path: "/ai",
-      children: Object.entries(aiData).map(([key, data]) => ({
-        title: data.title,
-        path: `/ai/${key}`,
-      })),
-    },
-    {
-      title: "Company",
-      path: "/company",
-      children: [
-        { title: "About Us", path: "/company/about" },
-        { title: "Blogs", path: "/company/blogs" },
-        { title: "Careers", path: "/company/careers" },
-        { title: "Events", path: "/company/events" },
-        { title: "FAQs", path: "/company/faqs" },
-        { title: "Partners", path: "/company/partners" },
-        { title: "Leadership", path: "/company/leadership" },
-        { title: "Pay Here", path: "/company/payhere" },
-      ],
-    },
-    {
-      title: "Contact",
-      path: "/contact",
-      children: [
-        { title: "Appointments", path: "/contact/appointment" },
-        { title: "Contact Us", path: "/contact/general" },
-        ...Object.entries(contactData).map(([key, data]) => ({
-          title: data.title,
-          path: `/contact/${key}`,
-        })),
-      ],
-    },
-  ];
+  // const navigationData = [
+  //   {
+  //     title: "Services",
+  //     path: "/services",
+  //     children: Object.entries(servicesData).map(([key, data]) => ({
+  //       title: data.title,
+  //       path: `/services/${key}`,
+  //     })),
+  //   },
+  //   {
+  //     title: "Solutions",
+  //     path: "/solutions",
+  //     children: Object.entries(solutionsData).map(([key, data]) => ({
+  //       title: data.title,
+  //       path: `/solutions/${key}`,
+  //     })),
+  //   },
+  //   {
+  //     title: "AI",
+  //     path: "/ai",
+  //     children: Object.entries(aiData).map(([key, data]) => ({
+  //       title: data.title,
+  //       path: `/ai/${key}`,
+  //     })),
+  //   },
+  //   {
+  //     title: "Company",
+  //     path: "/company",
+  //     children: [
+  //       { title: "About Us", path: "/company/about" },
+  //       { title: "Blogs", path: "/company/blogs" },
+  //       { title: "Careers", path: "/company/careers" },
+  //       { title: "Events", path: "/company/events" },
+  //       { title: "FAQs", path: "/company/faqs" },
+  //       { title: "Partners", path: "/company/partners" },
+  //       { title: "Leadership", path: "/company/leadership" },
+  //       { title: "Pay Here", path: "/company/payhere" },
+  //     ],
+  //   },
+  //   {
+  //     title: "Contact",
+  //     path: "/contact",
+  //     children: [
+  //       { title: "Appointments", path: "/contact/appointment" },
+  //       { title: "Contact Us", path: "/contact/general" },
+  //       ...Object.entries(contactData).map(([key, data]) => ({
+  //         title: data.title,
+  //         path: `/contact/${key}`,
+  //       })),
+  //     ],
+  //   },
+  // ];
 
   const handleLogout = () => {
     logout();
@@ -74,34 +74,34 @@ export function Navigation() {
   };
 
   return (
-    <nav className="bg-primary shadow-lg fixed w-full z-50 backdrop-blur-md top-0">
+    <nav className="bg-white shadow-sm fixed w-full z-50 backdrop-blur-md top-0 ">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link to="/" className="flex items-center group">
-              <Shield className="h-8 w-8 text-accent-purple group-hover:text-accent-teal transition-colors duration-300" />
-              <span className="ml-2 text-xl font-bold text-neutral-white group-hover:text-accent-teal transition-colors duration-300">
+              <Shield className="h-8 w-8 text-red-500 group- transition-colors duration-300" />
+              <span className="ml-2 text-xl font-extrabold text-slate-800 group- transition-colors duration-300">
                 MarcViews
               </span>
             </Link>
           </div>
 
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-8 font-bold ">
             <Link
               to="/"
-              className={`text-neutral-white/80 hover:text-accent-teal transition-all duration-300 ${
-                location.pathname === "/" ? "text-accent-teal" : ""
+              className={`text-black  transition-all duration-300 ${
+                location.pathname === "/" ? "text-red-500" : ""
               }`}
             >
               Home
             </Link>
 
-            {navigationData.map((item) => (
+            {/* {navigationData.map((item) => (
               <div key={item.path} className="relative group">
                 <div
-                  className={`flex items-center text-neutral-white/80 hover:text-accent-teal transition-all duration-300 cursor-pointer ${
+                  className={`flex items-center text-black  transition-all duration-300 cursor-pointer ${
                     location.pathname.startsWith(item.path)
-                      ? "text-accent-teal"
+                      ? "text-red-500"
                       : ""
                   }`}
                 >
@@ -115,12 +115,12 @@ export function Navigation() {
                     transition: "all 0.3s ease-in-out",
                   }}
                 >
-                  <div className="bg-secondary-dark rounded-lg shadow-xl border border-primary-accent/20 overflow-hidden min-w-[240px] backdrop-blur-md">
+                  <div className="bg-white rounded-lg shadow-card border border-gray-100 overflow-hidden min-w-[240px] backdrop-blur-md">
                     {item.children?.map((child) => (
                       <Link
                         key={child.path}
                         to={child.path}
-                        className="block px-4 py-3 text-neutral-white/80 hover:text-accent-teal hover:bg-primary-light/20 transition-all duration-300 first:rounded-t-lg last:rounded-b-lg border-b border-primary-accent/10 last:border-b-0"
+                        className="block px-4 py-3 text-black  hover:bg-gray-50 transition-all duration-300 first:rounded-t-lg last:rounded-b-lg border-b border-gray-100 last:border-b-0"
                       >
                         {child.title}
                       </Link>
@@ -128,17 +128,15 @@ export function Navigation() {
                   </div>
                 </div>
               </div>
-            ))}
+            ))} */}
 
             <div className="flex items-center space-x-4">
               {isAuthenticated ? (
                 <>
-                  <span className="text-neutral-white">
-                    Welcome, {user?.name}
-                  </span>
+                  <Link to="/profile" className="text-black">Welcome, {user?.name}</Link>
                   <Link
                     to="/profile"
-                    className="text-neutral-white hover:text-neutral-white transition-colors p-2 rounded-full hover:bg-primary-light"
+                    className="text-white bg-red-500 hover:text-slate-800 transition-colors p-2 rounded-full hover:bg-gray-100"
                   >
                     <User className="h-6 w-6" />
                   </Link>
@@ -147,7 +145,7 @@ export function Navigation() {
                       handleLogout();
                       setIsMenuOpen(false);
                     }}
-                    className="text-neutral-white hover:text-neutral-white p-2 rounded-full hover:bg-primary-light"
+                    className="text-black hover:text-slate-800 p-2 rounded-full hover:bg-gray-100"
                   >
                     Logout
                   </button>
@@ -156,13 +154,13 @@ export function Navigation() {
                 <>
                   <Link
                     to="/login"
-                    className="text-neutral-white hover:text-neutral-white transition-colors p-2 rounded-full hover:bg-primary-light"
+                    className="text-black hover:text-slate-800 transition-colors p-2 rounded-full hover:bg-gray-100"
                   >
                     Login
                   </Link>
                   <Link
                     to="/register"
-                    className="bg-primary text-white p-2 rounded-full hover:bg-primary-dark"
+                    className="bg-red-700 text-white p-2 rounded-full hover:bg-red-700-dark"
                   >
                     Register
                   </Link>
@@ -174,7 +172,7 @@ export function Navigation() {
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-neutral-white/80 hover:text-neutral-white p-2 rounded-lg hover:bg-primary-light transition-colors"
+              className="text-black hover:text-slate-800 p-2 rounded-lg hover:bg-gray-100 transition-colors"
             >
               {isMenuOpen ? (
                 <X className="h-6 w-6" />
@@ -190,9 +188,9 @@ export function Navigation() {
       <div
         className={`md:hidden ${
           isMenuOpen ? "block" : "hidden"
-        } bg-secondary-dark border-t border-primary-accent/20`}
+        } bg-white border-t border-gray-100 shadow-sm`}
       >
-        <div className="px-2 pt-2 pb-3 space-y-1">
+        {/* <div className="px-2 pt-2 pb-3 space-y-1">
           {navigationData.map((item) => (
             <div key={item.title} className="relative group">
               <button
@@ -206,8 +204,8 @@ export function Navigation() {
                 }}
                 className={`w-full flex items-center justify-between px-3 py-2 rounded-md text-base font-medium ${
                   location.pathname === item.path
-                    ? "bg-primary-accent/20 text-accent-teal"
-                    : "text-neutral-white/70 hover:bg-primary-accent/10 hover:text-neutral-white"
+                    ? "bg-gray-100 text-red-500"
+                    : "text-black hover:bg-gray-50 hover:text-slate-800"
                 }`}
               >
                 <span>{item.title}</span>
@@ -228,8 +226,8 @@ export function Navigation() {
                       to={child.path}
                       className={`block px-3 py-2 rounded-md text-base font-medium ${
                         location.pathname === child.path
-                          ? "bg-primary-accent/20 text-accent-teal"
-                          : "text-neutral-white/70 hover:bg-primary-accent/10 hover:text-neutral-white"
+                          ? "bg-gray-100 text-red-500"
+                          : "text-black hover:bg-gray-50 hover:text-slate-800"
                       }`}
                       onClick={() => setIsMenuOpen(false)}
                     >
@@ -240,15 +238,15 @@ export function Navigation() {
               )}
             </div>
           ))}
-        </div>
+        </div> */}
 
         <div className="flex space-x-4 px-4 py-3">
           {isAuthenticated ? (
             <>
-              <div className="text-neutral-white">Welcome, {user?.name}</div>
+              <div className="text-black">Welcome, {user?.name}</div>
               <Link
                 to="/profile"
-                className="text-neutral-white hover:text-neutral-white p-2 rounded-full hover:bg-primary-light"
+                className="text-black hover:text-slate-800 p-2 rounded-full hover:bg-gray-100"
                 onClick={() => setIsMenuOpen(false)}
               >
                 <User className="h-6 w-6" />
@@ -258,7 +256,7 @@ export function Navigation() {
                   handleLogout();
                   setIsMenuOpen(false);
                 }}
-                className="text-neutral-white hover:text-neutral-white p-2 rounded-full hover:bg-primary-light"
+                className="text-black hover:text-slate-800 p-2 rounded-full hover:bg-gray-100"
               >
                 Logout
               </button>
@@ -267,14 +265,14 @@ export function Navigation() {
             <>
               <Link
                 to="/login"
-                className="text-neutral-white hover:text-neutral-white p-2 rounded-full hover:bg-primary-light"
+                className="text-black hover:text-slate-800 p-2 rounded-full hover:bg-gray-100"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Login
               </Link>
               <Link
                 to="/register"
-                className="bg-primary text-white p-2 rounded-full hover:bg-primary-dark"
+                className="bg-red-700 text-white p-2 rounded-full hover:bg-red-700-dark"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Register

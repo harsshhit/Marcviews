@@ -1,6 +1,6 @@
 // src/components/Partners.tsx
 import { useState } from "react";
-import { Handshake, ShieldCheck, ExternalLink } from "lucide-react";
+import { Handshake, ShieldCheck } from "lucide-react";
 import formService from "../../services/formService";
 import type { PartnerFormData } from "../../services/formService";
 import { useApp } from "../../context/AppContext";
@@ -78,14 +78,14 @@ export function Partners() {
         <div className="grid md:grid-cols-2 gap-12">
           {/* Why Partner Section */}
           <div className="space-y-6">
-            <h2 className="text-3xl font-bold text-accent-teal">
+            <h2 className="text-3xl font-bold text-red-500">
               Why Partner With Us?
             </h2>
             <div className="space-y-6">
               <div className="bg-primary-accent/10 rounded-xl p-6 backdrop-blur-sm hover:bg-primary-accent/20 transition-colors duration-300">
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 bg-accent-teal/20 rounded-full flex items-center justify-center">
-                    <Handshake className="w-6 h-6 text-accent-teal" />
+                    <Handshake className="w-6 h-6 text-red-500" />
                   </div>
                   <div>
                     <h3 className="text-2xl font-semibold text-white mb-3">
@@ -102,7 +102,7 @@ export function Partners() {
               <div className="bg-primary-accent/10 rounded-xl p-6 backdrop-blur-sm hover:bg-primary-accent/20 transition-colors duration-300">
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 bg-accent-teal/20 rounded-full flex items-center justify-center">
-                    <ShieldCheck className="w-6 h-6 text-accent-teal" />
+                    <ShieldCheck className="w-6 h-6 text-red-500" />
                   </div>
                   <div>
                     <h3 className="text-2xl font-semibold text-white mb-3">
@@ -120,7 +120,7 @@ export function Partners() {
 
           {/* Partner Form Section */}
           <div className="bg-primary-accent/10 rounded-xl p-8 backdrop-blur-sm">
-            <h2 className="text-3xl font-bold text-accent-teal mb-6">
+            <h2 className="text-3xl font-bold text-red-500 mb-6">
               Become a Partner
             </h2>
 
@@ -202,7 +202,7 @@ export function Partners() {
 
         {/* Partners Grid Section */}
         <div className="space-y-6">
-          <h3 className="text-3xl font-bold text-accent-teal">
+          <h3 className="text-3xl font-bold text-red-500">
             Our Trusted Partners
           </h3>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
@@ -252,7 +252,7 @@ export function Partners() {
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
-                <span className="text-white/90 group-hover:text-accent-teal transition-colors duration-300 text-center">
+                <span className="text-white/90 group-hover:text-red-500 transition-colors duration-300 text-center">
                   {partner.name}
                 </span>
               </a>

@@ -12,18 +12,18 @@ export function HeroSection() {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const slides: Slide[] = [
-    {
-      title: "Accelerate Together",
-      description:
-        "Modernize legacy infrastructure with enhanced operational efficiency and cloud migration",
-      image:
-        "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=2070",
-      features: [
-        "24/7 Monitoring & Support",
-        "Automated Security Protocols",
-        "Real-time Threat Detection",
-      ],
-    },
+    // {
+    //   title: "Accelerate Together",
+    //   description:
+    //     "Modernize legacy infrastructure with enhanced operational efficiency and cloud migration",
+    //   image:
+    //     "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=2070",
+    //   features: [
+    //     "24/7 Monitoring & Support",
+    //     "Automated Security Protocols",
+    //     "Real-time Threat Detection",
+    //   ],
+    // },
     {
       title: "Enterprise Grade Defense",
       description:
@@ -58,7 +58,7 @@ export function HeroSection() {
   }, []);
 
   return (
-    <div className="relative h-[700px] mt-16 overflow-hidden">
+    <div className="relative min-h-screen  overflow-hidden">
       {slides.map((slide, index) => (
         <motion.div
           key={index}
@@ -70,18 +70,18 @@ export function HeroSection() {
           animate={{ opacity: index === currentSlide ? 1 : 0 }}
           transition={{ duration: 0.5 }}
         >
-          <div className="absolute inset-0 bg-gradient-to-r from-secondary-dark/95 via-secondary-dark/90 to-transparent">
+          <div className="absolute inset-0 bg-gradient-to-r from-black via-black/90 to-transparent">
             <div className="max-w-7xl mx-auto px-4 h-full flex items-center">
               <motion.div
-                className="text-neutral-white max-w-2xl"
-                initial={{ x: -50, opacity: 0 }}
+                className="text-white max-w-2xl"
+                // initial={{ x: -50, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ delay: 0.2, duration: 0.5 }}
               >
-                <h1 className="text-6xl font-bold mb-6 text-neutral-white leading-tight">
+                <h1 className="text-6xl font-bold mb-6 text-white leading-tight">
                   {slide.title}
                 </h1>
-                <p className="text-xl mb-8 text-neutral-white/90 leading-relaxed">
+                <p className="text-xl mb-8 text-white leading-relaxed">
                   {slide.description}
                 </p>
 
@@ -95,7 +95,7 @@ export function HeroSection() {
                       transition={{ delay: 0.3 + i * 0.1 }}
                     >
                       <div className="w-2 h-2 rounded-full bg-accent-teal" />
-                      <span className="text-neutral-white/90">{feature}</span>
+                      <span className="text-white">{feature}</span>
                     </motion.div>
                   ))}
                 </div>
@@ -112,7 +112,7 @@ export function HeroSection() {
             className={`w-3 h-3 rounded-full transition-all duration-300 ${
               index === currentSlide
                 ? "bg-accent-purple w-8"
-                : "bg-neutral-white/50 hover:bg-neutral-white"
+                : "bg-slate-300 hover:bg-slate-400"
             }`}
             onClick={() => setCurrentSlide(index)}
             whileHover={{ scale: 1.2 }}

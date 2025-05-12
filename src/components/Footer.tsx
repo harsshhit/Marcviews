@@ -1,132 +1,208 @@
 import React from "react";
-import { Shield } from "lucide-react";
+import { Shield, Mail, Phone, MapPin, ExternalLink } from "lucide-react";
 
 export function Footer() {
   return (
-    <footer className="bg-gradient-to-b from-secondary-dark to-primary text-neutral-white py-12">
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="grid md:grid-cols-4 gap-8">
-          <div>
-            <div className="flex items-center mb-4">
-              <Shield className="h-8 w-8 text-accent-purple" />
-              <span className="ml-2 text-xl font-bold text-neutral-white">
+    <footer className="bg-black text-white py-16">
+      <div className="max-w-7xl mx-auto px-6">
+        {/* Top section with logo and newsletter */}
+        <div className="flex flex-col md:flex-row justify-between items-start mb-12 pb-12 border-b border-gray-800">
+          <div className="mb-8 md:mb-0 md:w-1/3">
+            <div className="flex items-center mb-6">
+              <Shield className="h-8 w-8 text-red-600" strokeWidth={2} />
+              <span className="ml-3 text-2xl font-bold tracking-tight">
                 MarcViews
               </span>
             </div>
-            <p className="text-neutral-white/70">
-              Leading provider of enterprise-grade cybersecurity solutions,
-              protecting businesses worldwide since 2020.
+            <p className="text-gray-400 max-w-md mb-6">
+              Enterprise-grade cybersecurity solutions protecting businesses
+              worldwide since 2020.
             </p>
-          </div>
-          <div>
-            <h4 className="text-lg font-semibold mb-4 text-accent-teal">
-              Quick Links
-            </h4>
-            <ul className="space-y-2">
-              <li>
-                <a
-                  href="/services"
-                  className="text-neutral-white/70 hover:text-neutral-white transition-colors"
+            <div className="flex space-x-4">
+              <a
+                href="#"
+                className="text-gray-400 hover:text-white transition-colors"
+              >
+                <svg
+                  className="h-6 w-6"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
                 >
-                  Services
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/solutions"
-                  className="text-neutral-white/70 hover:text-neutral-white transition-colors"
+                  <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"></path>
+                </svg>
+              </a>
+              <a
+                href="#"
+                className="text-gray-400 hover:text-white transition-colors"
+              >
+                <svg
+                  className="h-6 w-6"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
                 >
-                  Solutions
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/company/about"
-                  className="text-neutral-white/70 hover:text-neutral-white transition-colors"
+                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                </svg>
+              </a>
+              <a
+                href="#"
+                className="text-gray-400 hover:text-white transition-colors"
+              >
+                <svg
+                  className="h-6 w-6"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
                 >
-                  About Us
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/contact/general"
-                  className="text-neutral-white/70 hover:text-neutral-white transition-colors"
-                >
-                  Contact
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/company/careers"
-                  className="text-neutral-white/70 hover:text-neutral-white transition-colors"
-                >
-                  Careers
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="text-lg font-semibold mb-4 text-accent-purple">
-              Contact
-            </h4>
-            <p className="text-neutral-white/70">
-              111 Queen St. E, S. Building,
-              <br />
-              Suite 450, Toronto, ON,
-              <br />
-              M5C 1S2
-            </p>
-            <div className="mt-4">
-              <p className="text-neutral-white/70">
-                Email: contact@marcviews.com
-              </p>
-              <p className="text-neutral-white/70">Phone: +1 (555) 123-4567</p>
+                  <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                </svg>
+              </a>
             </div>
           </div>
-          <div>
-            <h4 className="text-lg font-semibold mb-4 text-accent-teal">
-              Legal
-            </h4>
-            <ul className="space-y-2">
-              <li>
-                <a
-                  href="#"
-                  className="text-neutral-white/70 hover:text-neutral-white transition-colors"
-                >
-                  Privacy Policy
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-neutral-white/70 hover:text-neutral-white transition-colors"
-                >
-                  Terms of Service
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-neutral-white/70 hover:text-neutral-white transition-colors"
-                >
-                  Cookie Policy
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-neutral-white/70 hover:text-neutral-white transition-colors"
-                >
-                  Security Policy
-                </a>
-              </li>
-            </ul>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 md:w-2/3">
+            <div>
+              <h4 className="text-sm font-bold uppercase tracking-wider text-red-600 mb-4">
+                Quick Links
+              </h4>
+              <ul className="space-y-3">
+                <li>
+                  <a
+                    href="/services"
+                    className="text-gray-400 hover:text-white transition-colors flex items-center group"
+                  >
+                    <span>Services</span>
+                    <ExternalLink className="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/solutions"
+                    className="text-gray-400 hover:text-white transition-colors flex items-center group"
+                  >
+                    <span>Solutions</span>
+                    <ExternalLink className="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/company/about"
+                    className="text-gray-400 hover:text-white transition-colors flex items-center group"
+                  >
+                    <span>About Us</span>
+                    <ExternalLink className="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/contact/general"
+                    className="text-gray-400 hover:text-white transition-colors flex items-center group"
+                  >
+                    <span>Contact</span>
+                    <ExternalLink className="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/company/careers"
+                    className="text-gray-400 hover:text-white transition-colors flex items-center group"
+                  >
+                    <span>Careers</span>
+                    <ExternalLink className="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="text-sm font-bold uppercase tracking-wider text-red-600 mb-4">
+                Contact
+              </h4>
+              <div className="space-y-4">
+                <div className="flex items-start">
+                  <MapPin className="h-5 w-5 text-gray-400 mr-2 mt-0.5" />
+                  <p className="text-gray-400">
+                    111 Queen St. E, S. Building,
+                    <br />
+                    Suite 450, Toronto, ON,
+                    <br />
+                    M5C 1S2
+                  </p>
+                </div>
+                <div className="flex items-center">
+                  <Mail className="h-5 w-5 text-gray-400 mr-2" />
+                  <a
+                    href="mailto:contact@marcviews.com"
+                    className="text-gray-400 hover:text-white transition-colors"
+                  >
+                    contact@marcviews.com
+                  </a>
+                </div>
+                <div className="flex items-center">
+                  <Phone className="h-5 w-5 text-gray-400 mr-2" />
+                  <a
+                    href="tel:+15551234567"
+                    className="text-gray-400 hover:text-white transition-colors"
+                  >
+                    +1 (555) 123-4567
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h4 className="text-sm font-bold uppercase tracking-wider text-red-600 mb-4">
+                Legal
+              </h4>
+              <ul className="space-y-3">
+                <li>
+                  <a
+                    href="#"
+                    className="text-gray-400 hover:text-white transition-colors"
+                  >
+                    Privacy Policy
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    className="text-gray-400 hover:text-white transition-colors"
+                  >
+                    Terms of Service
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    className="text-gray-400 hover:text-white transition-colors"
+                  >
+                    Cookie Policy
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    className="text-gray-400 hover:text-white transition-colors"
+                  >
+                    Security Policy
+                  </a>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
-        <div className="border-t border-primary-accent/20 mt-8 pt-8 text-center">
-          <p className="text-neutral-white/70">
+
+        {/* Bottom section with copyright */}
+        <div className="flex flex-col md:flex-row justify-between items-center">
+          <p className="text-gray-500 text-sm mb-4 md:mb-0">
             &copy; 2025 MarcViews Networks, Inc. All rights reserved.
           </p>
+          <div>
+            <button className="text-xs text-gray-500 hover:text-white transition-colors mr-6">
+              Do Not Sell My Information
+            </button>
+            <button className="text-xs text-gray-500 hover:text-white transition-colors">
+              Accessibility
+            </button>
+          </div>
         </div>
       </div>
     </footer>

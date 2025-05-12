@@ -91,12 +91,12 @@ export function Blogs() {
               className="bg-primary-accent/10 rounded-xl p-8 backdrop-blur-sm hover:bg-primary-accent/20 transition-colors duration-300"
             >
               <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
-                <div className="text-sm text-accent-teal">{post.date}</div>
+                <div className="text-sm text-red-500">{post.date}</div>
                 <div className="flex flex-wrap gap-2">
                   {post.categories.split(", ").map((category, i) => (
                     <span
                       key={i}
-                      className="px-3 py-1 text-xs rounded-full bg-accent-purple/10 text-accent-purple"
+                      className="px-3 py-1 text-xs rounded-full bg-accent-purple/10 text-red-500"
                     >
                       {category}
                     </span>
@@ -109,7 +109,7 @@ export function Blogs() {
                 to={`/company/blogs/${post.title
                   .toLowerCase()
                   .replace(/[^a-z0-9]+/g, "-")}`}
-                className="inline-flex items-center px-6 py-3 bg-accent-teal/10 text-accent-teal rounded-lg hover:bg-accent-teal/20 transition-colors duration-300"
+                className="inline-flex items-center px-6 py-3 bg-accent-teal/10 text-red-500 rounded-lg hover:bg-accent-teal/20 transition-colors duration-300"
               >
                 Continue Reading
               </Link>

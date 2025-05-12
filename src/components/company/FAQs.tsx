@@ -14,7 +14,7 @@ export function FAQs() {
             Please reach us at{" "}
             <a
               href="mailto:contact@marcviews.com"
-              className="text-accent-teal hover:text-accent-teal/80 transition-colors duration-300"
+              className="text-red-500 hover:text-red-500/80 transition-colors duration-300"
             >
               contact@marcviews.com
             </a>{" "}
@@ -165,7 +165,7 @@ export function FAQs() {
               key={index}
               className="bg-primary-accent/10 rounded-xl p-6 backdrop-blur-sm hover:bg-primary-accent/20 transition-colors duration-300"
             >
-              <h2 className="text-2xl font-semibold text-accent-teal mb-4">
+              <h2 className="text-2xl font-semibold text-red-500 mb-4">
                 {faq.question}
               </h2>
               <div className="text-white/90 leading-relaxed">{faq.answer}</div>
@@ -175,7 +175,7 @@ export function FAQs() {
 
         {/* CTA Section */}
         <div className="bg-primary-accent/10 rounded-xl p-8 backdrop-blur-sm">
-          <h2 className="text-3xl font-bold text-accent-teal mb-6">
+          <h2 className="text-3xl font-bold text-red-500 mb-6">
             Considering a migration to public cloud?
           </h2>
           <p className="text-xl text-white/90 mb-6">Ask yourself:</p>
@@ -200,7 +200,6 @@ export function FAQs() {
             >
               Book an Appointment
             </Link>
-            
           </div>
         </div>
       </div>

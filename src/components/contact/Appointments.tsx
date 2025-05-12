@@ -1,6 +1,6 @@
 // src/components/Appointments.tsx
 import { useState } from "react";
-import { AppointmentModal } from "./AppointmentModal";
+// import { AppointmentForm } from "./AppointmentForm";
 
 const services = [
   {
@@ -74,7 +74,7 @@ export function Appointments() {
                 <p className="text-white/70 text-sm">{s.duration}</p>
               </div>
               <div className="text-right space-y-2">
-                <p className="font-semibold text-accent-teal">{s.price}</p>
+                <p className="font-semibold text-red-500">{s.price}</p>
                 <button
                   onClick={() => handleContinue(s)}
                   className="px-6 py-2 bg-accent-teal text-white rounded-lg hover:bg-accent-teal/90 transition-colors duration-300"
@@ -93,7 +93,7 @@ export function Appointments() {
           Online Payment:{" "}
           <a
             href="https://pay.marcviews.com/"
-            className="text-accent-teal hover:text-accent-teal/80 transition-colors duration-300"
+            className="text-red-500 hover:text-red-500/80 transition-colors duration-300"
           >
             https://pay.marcviews.com/
           </a>
@@ -102,7 +102,7 @@ export function Appointments() {
       </div>
 
       {isModalOpen && selectedService && (
-        <AppointmentModal
+        <AppointmentForm
           isOpen={isModalOpen}
           onClose={handleCloseModal}
           service={selectedService}

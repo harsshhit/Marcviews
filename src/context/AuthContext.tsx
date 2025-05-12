@@ -30,6 +30,7 @@ interface AuthContextType {
     confirmPassword: string
   ) => Promise<void>;
   logout: () => void;
+  refreshUserData: () => Promise<void>;
 }
 
 export const AuthContext = createContext<AuthContextType | undefined>(
@@ -41,15 +42,50 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
+  // Function to fetch user data that can be called from anywhere
+  const fetchUserData = async () => {
     const token = localStorage.getItem("token");
-    if (token) {
-      // Verify token and get user data
-      // This would typically be an API call to verify the token
-      // For now, we'll just set isAuthenticated to true
-      setIsAuthenticated(true);
+    if (!token) {
+      setIsAuthenticated(false);
+      setUser(null);
+      setIsLoading(false);
+      return;
     }
-    setIsLoading(false);
+
+    try {
+      // Fetch user data from the server
+      const response = await authService.getCurrentUser();
+      if (response.data && response.data.user) {
+        const userData: User = {
+          id: response.data.user._id || response.data.user.id || '',
+          name: response.data.user.name,
+          email: response.data.user.email,
+          createdAt: response.data.user.createdAt,
+        };
+        setUser(userData);
+        setIsAuthenticated(true);
+      } else {
+        // If no user data is returned, clear the token
+        localStorage.removeItem("token");
+        localStorage.removeItem("rememberMe");
+        setIsAuthenticated(false);
+        setUser(null);
+      }
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+      // If there's an error (like expired token), clear the token
+      localStorage.removeItem("token");
+      localStorage.removeItem("rememberMe");
+      setIsAuthenticated(false);
+      setUser(null);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Fetch user data on component mount
+  useEffect(() => {
+    fetchUserData();
   }, []);
 
   const login = async (
@@ -60,15 +96,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setIsLoading(true);
     try {
       const response = await authService.login({ email, password, rememberMe });
-      if (response.data.user) {
-        const userData = {
-          ...response.data.user,
-          id: response.data.user._id,
+      if (response.data && response.data.user) {
+        const userData: User = {
+          id: response.data.user._id || response.data.user.id || '',
+          name: response.data.user.name,
+          email: response.data.user.email,
+          createdAt: response.data.user.createdAt,
         };
         setUser(userData);
         setIsAuthenticated(true);
-        if (response.data.token) {
-          localStorage.setItem("token", response.data.token);
+        if (response.token) {
+          localStorage.setItem("token", response.token);
           if (rememberMe) {
             localStorage.setItem("rememberMe", "true");
           } else {
@@ -76,8 +114,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           }
         }
       }
-    } catch (error: any) {
-      throw new Error(error.message);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      } else {
+        throw new Error("An unexpected error occurred during login");
+      }
     } finally {
       setIsLoading(false);
     }
@@ -97,19 +139,25 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         password,
         confirmPassword,
       });
-      if (response.data.user) {
-        const userData = {
-          ...response.data.user,
-          id: response.data.user._id,
+      if (response.data && response.data.user) {
+        const userData: User = {
+          id: response.data.user._id || response.data.user.id || '',
+          name: response.data.user.name,
+          email: response.data.user.email,
+          createdAt: response.data.user.createdAt,
         };
         setUser(userData);
         setIsAuthenticated(true);
-        if (response.data.token) {
-          localStorage.setItem("token", response.data.token);
+        if (response.token) {
+          localStorage.setItem("token", response.token);
         }
       }
-    } catch (error: any) {
-      throw new Error(error.message);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      } else {
+        throw new Error("An unexpected error occurred during registration");
+      }
     } finally {
       setIsLoading(false);
     }
@@ -119,8 +167,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setIsLoading(true);
     try {
       await authService.forgotPassword(email);
-    } catch (error: any) {
-      throw new Error(error.message);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      } else {
+        throw new Error("An unexpected error occurred during password reset request");
+      }
     } finally {
       setIsLoading(false);
     }
@@ -134,8 +186,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setIsLoading(true);
     try {
       await authService.resetPassword({ token, password, confirmPassword });
-    } catch (error: any) {
-      throw new Error(error.message);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      } else {
+        throw new Error("An unexpected error occurred during password reset");
+      }
     } finally {
       setIsLoading(false);
     }
@@ -157,6 +213,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     forgotPassword,
     resetPassword,
     logout,
+    refreshUserData: fetchUserData,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

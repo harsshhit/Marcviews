@@ -29,6 +29,7 @@ import { AuthProfile } from "./components/account/Profile";
 import { BlogPost } from "./components/company/BlogPost";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
+import { AppointmentForm } from "./components/contact/AppointmentForm";
 
 const router = createBrowserRouter(
   [
@@ -37,18 +38,18 @@ const router = createBrowserRouter(
       element: (
         <AppProvider>
           <AuthProvider>
-            <div className="min-h-screen bg-secondary-dark text-neutral-white">
+            <div className="min-h-screen bg-gradient-to-b from-white to-slate-50 text-slate-700">
               <Navigation />
               <main className="pt-16">
                 <Routes>
                   <Route
                     path="/"
                     element={
-                      <>
+                      <div className="space-y-24">
                         <HeroSection />
                         <SecurityFeatures />
                         <Categories />
-                      </>
+                      </div>
                     }
                   />
                   <Route path="/login" element={<Login />} />
@@ -85,6 +86,10 @@ const router = createBrowserRouter(
                   <Route
                     path="/contact/appointment"
                     element={<Appointments />}
+                  />{" "}
+                  <Route
+                    path="/contact/appointmentform"
+                    element={<AppointmentForm />}
                   />
                   <Route path="/contact/general" element={<ContactUs />} />
                   <Route path="/profile" element={<AuthProfile />} />

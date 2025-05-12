@@ -1,35 +1,30 @@
-import React, { useState } from "react";
 import {
   Shield,
   Lock,
-  AlertTriangle,
-  Clock,
-  Target,
-  BarChart,
   Activity,
+  // Link,
 } from "lucide-react";
-import { AppointmentModal } from "../contact/AppointmentModal";
-import { motion } from "framer-motion";
+import { motion } from "framer-motion"; 
+import { Link } from "react-router-dom";
 
 export function SecurityFeatures() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const features = [
     {
-      icon: <Shield className="h-12 w-12 text-accent-purple" />,
+      icon: <Shield className="h-12 w-12 text-red-500" />,
       title: "Advanced Threat Protection",
       description:
         "Real-time monitoring and automated response to security threats",
       stats: "99.9% Threat Detection Rate",
     },
     {
-      icon: <Lock className="h-12 w-12 text-accent-teal" />,
+      icon: <Lock className="h-12 w-12 text-red-500" />,
       title: "Data Encryption",
       description: "End-to-end encryption for all your sensitive data",
       stats: "256-bit AES Encryption",
     },
     {
-      icon: <Activity className="h-12 w-12 text-accent-success" />,
+      icon: <Activity className="h-12 w-12 text-red-500" />,
       title: "AI-Powered Analytics",
       description:
         "Intelligent threat detection and predictive security measures",
@@ -37,16 +32,10 @@ export function SecurityFeatures() {
     },
   ];
 
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
+ 
 
   return (
-    <div className="py-20 bg-gradient-to-b from-secondary-dark via-primary to-secondary-dark">
+    <div className="py-20 bg-gradient-to-b from-white via-gray-50 to-white">
       <div className="max-w-7xl mx-auto px-4">
         <motion.div
           className="text-center mb-16"
@@ -56,10 +45,13 @@ export function SecurityFeatures() {
           viewport={{ once: true }}
         >
           <h2 className="heading-2 mb-4">
-            Multi-layered, <span className="text-gradient">AI-powered</span>,
-            End-to-end security
+            Multi-layered,{" "}
+            <span className="bg-gradient-to-r from-red-500 to-red-700 bg-clip-text text-transparent ">
+              AI-powered
+            </span>
+            , End-to-end security
           </h2>
-          <p className="text-neutral-white/80 max-w-2xl mx-auto text-lg leading-relaxed">
+          <p className="text-slate-600 max-w-2xl mx-auto text-lg leading-relaxed">
             Enterprise-grade security with automated threat detection and
             response, powered by advanced AI algorithms and machine learning
           </p>
@@ -81,12 +73,10 @@ export function SecurityFeatures() {
                   {feature.icon}
                 </div>
                 <h3 className="heading-3 mb-3">{feature.title}</h3>
-                <p className="text-neutral-white/70 leading-relaxed mb-4">
+                <p className="text-slate-600 leading-relaxed mb-4 font- bold">
                   {feature.description}
                 </p>
-                <div className="text-accent-teal font-semibold text-sm">
-                  {feature.stats}
-                </div>
+                <div className="text-gray-500  text-sm">{feature.stats}</div>
               </div>
             </motion.div>
           ))}
@@ -99,16 +89,15 @@ export function SecurityFeatures() {
           transition={{ duration: 0.5, delay: 0.3 }}
           viewport={{ once: true }}
         >
-          <button
-            className="btn btn-primary btn-ripple px-8 py-4 text-lg"
-            onClick={handleOpenModal}
-          >
-            Book a Consultative Call
-          </button>
+          <Link to="/contact/appointmentform">
+            <button className="bg-black text-white rounded-full hover:bg-red-600 transition-colors duration-300 px-8 py-4 text-lg">
+              Book a Consultative Call
+            </button>
+          </Link>
         </motion.div>
       </div>
 
-      <AppointmentModal
+      {/* <AppointmentModal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
         service={{
@@ -117,7 +106,7 @@ export function SecurityFeatures() {
           duration: "30 mins",
           price: "Free",
         }}
-      />
+      /> */}
     </div>
   );
 }
