@@ -4,12 +4,11 @@ import type { AppointmentFormData } from "../../services/formService";
 import { useApp } from "../../context/AppContext";
 import { useAuth } from "../../context/AuthContext";
 
-// Sample service data
 const sampleService = {
   _id: "consultation-001",
   title: "Security Consultation",
   duration: "30 mins",
-  price: "Free"
+  price: "Free",
 };
 
 export function AppointmentForm() {
@@ -70,94 +69,50 @@ export function AppointmentForm() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background py-10 px-4">
-      <div className="bg-primary p-6 rounded-lg w-full max-w-lg">
-        <h2 className="text-2xl font-bold text-white mb-4">Book Appointment</h2>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#0E1628] to-[#1a1f3c] px-4 py-10">
+      <div className="bg-[#1F2A48] text-white shadow-xl rounded-2xl p-8 w-full max-w-xl border border-white/10">
+        <h2 className="text-3xl font-semibold mb-6 text-center">Book Appointment</h2>
 
-        <div className="mb-4 p-4 bg-secondary-dark/50 rounded-lg">
-          <h3 className="font-medium text-white">{sampleService.title}</h3>
-          <p className="text-white/70 text-sm">
-            Duration: {sampleService.duration} | Price: {sampleService.price}
+        <div className="mb-6 bg-[#2D3C60] p-4 rounded-xl">
+          <h3 className="text-lg font-medium">{sampleService.title}</h3>
+          <p className="text-sm text-white/70 mt-1">
+            ⏱ {sampleService.duration} &nbsp; | &nbsp; 💸 {sampleService.price}
           </p>
         </div>
 
         {error && (
-          <div className="mb-4 p-3 bg-red-500/10 border border-red-500/20 rounded text-red-500 text-sm">
+          <div className="mb-4 p-3 bg-red-600/10 border border-red-600 rounded text-sm text-red-400">
             {error}
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
-          <div>
-            <label className="block text-white/70 mb-1 text-sm">Name*</label>
-            <input
-              type="text"
-              required
-              className="w-full p-2 rounded bg-primary text-white border border-primary-accent/20 text-sm"
-              value={formData.name}
-              onChange={(e) =>
-                setFormData({ ...formData, name: e.target.value })
-              }
-            />
-          </div>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {[
+            { label: "Name*", value: formData.name, type: "text", key: "name" },
+            { label: "Email*", value: formData.email, type: "email", key: "email" },
+            { label: "Phone*", value: formData.phone, type: "tel", key: "phone" },
+            { label: "Date*", value: formData.date, type: "date", key: "date" },
+            { label: "Time*", value: formData.time, type: "time", key: "time" },
+          ].map(({ label, value, type, key }) => (
+            <div key={key}>
+              <label className="block text-sm text-white/80 mb-1">{label}</label>
+              <input
+                type={type}
+                required
+                className="w-full p-3 rounded-md bg-[#2D3C60] text-white border border-white/10 focus:ring-2 focus:ring-accent-teal outline-none text-sm"
+                value={value}
+                onChange={(e) =>
+                  setFormData({ ...formData, [key]: e.target.value })
+                }
+              />
+            </div>
+          ))}
 
           <div>
-            <label className="block text-white/70 mb-1 text-sm">Email*</label>
-            <input
-              type="email"
-              required
-              className="w-full p-2 rounded bg-primary text-white border border-primary-accent/20 text-sm"
-              value={formData.email}
-              onChange={(e) =>
-                setFormData({ ...formData, email: e.target.value })
-              }
-            />
-          </div>
-
-          <div>
-            <label className="block text-white/70 mb-1 text-sm">Phone*</label>
-            <input
-              type="tel"
-              required
-              className="w-full p-2 rounded bg-primary text-white border border-primary-accent/20 text-sm"
-              value={formData.phone}
-              onChange={(e) =>
-                setFormData({ ...formData, phone: e.target.value })
-              }
-            />
-          </div>
-
-          <div>
-            <label className="block text-white/70 mb-1 text-sm">Date*</label>
-            <input
-              type="date"
-              required
-              className="w-full p-2 rounded bg-primary text-white border border-primary-accent/20 text-sm"
-              value={formData.date}
-              onChange={(e) =>
-                setFormData({ ...formData, date: e.target.value })
-              }
-            />
-          </div>
-
-          <div>
-            <label className="block text-white/70 mb-1 text-sm">Time*</label>
-            <input
-              type="time"
-              required
-              className="w-full p-2 rounded bg-primary text-white border border-primary-accent/20 text-sm"
-              value={formData.time}
-              onChange={(e) =>
-                setFormData({ ...formData, time: e.target.value })
-              }
-            />
-          </div>
-
-          <div>
-            <label className="block text-white/70 mb-1 text-sm">Notes</label>
+            <label className="block text-sm text-white/80 mb-1">Notes</label>
             <textarea
-              className="w-full p-2 rounded bg-primary text-white border border-primary-accent/20 text-sm"
               rows={3}
+              className="w-full p-3 rounded-md bg-[#2D3C60] text-white border border-white/10 focus:ring-2 focus:ring-accent-teal outline-none text-sm"
               value={formData.notes}
               onChange={(e) =>
                 setFormData({ ...formData, notes: e.target.value })
@@ -168,7 +123,7 @@ export function AppointmentForm() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full bg-accent-teal text-white py-2 rounded-lg hover:bg-accent-teal/90 transition disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-accent-teal hover:bg-accent-teal/90 text-white py-3 rounded-xl text-sm font-medium transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isSubmitting ? "Booking..." : "Book Appointment"}
           </button>

@@ -23,9 +23,9 @@ import { FAQs } from "./components/company/FAQs";
 import { Leadership } from "./components/company/Leadership";
 import { Partners } from "./components/company/Partners";
 import { PayHere } from "./components/company/PayHere";
-import { Appointments } from "./components/contact/Appointments";
+// import { Appointments } from "./components/contact/Appointments";
 import { ContactUs } from "./components/contact/ContactUs";
-import { AuthProfile } from "./components/account/Profile";
+import { AuthProfile } from "./components/Profile";
 import { BlogPost } from "./components/company/BlogPost";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
@@ -83,10 +83,10 @@ const router = createBrowserRouter(
                   <Route path="/company/leadership" element={<Leadership />} />
                   <Route path="/company/partners" element={<Partners />} />
                   <Route path="/company/payhere" element={<PayHere />} />
-                  <Route
+                  {/* <Route
                     path="/contact/appointment"
                     element={<Appointments />}
-                  />{" "}
+                  />{" "} */}
                   <Route
                     path="/contact/appointmentform"
                     element={<AppointmentForm />}
