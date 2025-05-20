@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { User, Calendar, LogOut } from "lucide-react";
+import { User, Calendar, LogOut, Settings, Bell, CreditCard, ChevronRight } from "lucide-react";
 import bookingService, { Booking } from "../services/bookingService";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
@@ -53,7 +53,7 @@ export function AuthProfile() {
     };
 
     initializeProfile();
-  }, [authUser, isAuthenticated]);
+  }, [authUser, isAuthenticated, navigate, refreshUserData]);
 
   const fetchBookings = async () => {
     try {
@@ -84,7 +84,7 @@ export function AuthProfile() {
   const menuItems = [
     {
       icon: <User className="w-5 h-5" />,
-      label: "Account Details",
+      label: "Account",
       id: "account",
     },
     {
@@ -93,61 +93,95 @@ export function AuthProfile() {
       id: "bookings",
       badge: bookings.length,
     },
+    {
+      icon: <Bell className="w-5 h-5" />,
+      label: "Notifications",
+      id: "notifications",
+    },
+    {
+      icon: <CreditCard className="w-5 h-5" />,
+      label: "Billing",
+      id: "billing",
+    },
+    {
+      icon: <Settings className="w-5 h-5" />,
+      label: "Settings",
+      id: "settings",
+    },
   ];
 
-  const CardWrapper = ({ children }: { children: React.ReactNode }) => (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -10 }}
-      transition={{ duration: 0.4 }}
-      className="bg-secondary-dark/50 backdrop-blur-md rounded-xl p-8 border border-primary-accent/20 shadow-xl shadow-primary-accent/10"
-    >
-      {children}
-    </motion.div>
-  );
-
   const renderAccountDetails = () => (
-    <CardWrapper>
-      <h2 className="text-3xl font-semibold text-neutral-white mb-6 tracking-wide">
-        Account Details
-      </h2>
-      <div className="space-y-5">
-        {[
-          { label: "Name", value: user?.name },
-          { label: "Email", value: user?.email },
-          { label: "Role", value: user?.role },
-          { label: "Subscription", value: user?.subscription },
-          { label: "Member Since", value: user?.joinDate },
-        ].map(({ label, value }) => (
-          <div key={label}>
-            <label className="block text-sm font-medium text-neutral-white/70 mb-1 tracking-wider">
-              {label}
-            </label>
-            <p className="text-neutral-white">{value}</p>
-          </div>
-        ))}
-        <button
-          onClick={handleLogout}
-          className="mt-6 flex items-center space-x-2 text-accent-danger/70 hover:text-accent-danger transition-all duration-200 hover:scale-105"
-        >
-          <LogOut className="w-5 h-5" />
-          <span>Logout</span>
+    <div className="space-y-8">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 sm:gap-0">
+        <h2 className="text-2xl font-semibold text-gray-800">Account Details</h2>
+        <button className="text-sm text-accent-teal hover:text-accent-teal/80 font-medium flex items-center gap-1">
+          <span>Edit Profile</span>
+          <ChevronRight className="w-4 h-4" />
         </button>
       </div>
-    </CardWrapper>
+
+      <div className="bg-white rounded-xl shadow-sm p-4 sm:p-6 space-y-6">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+          <div className="w-16 h-16 bg-gradient-to-br from-accent-teal/10 to-accent-purple/10 rounded-full flex items-center justify-center">
+            <User className="w-8 h-8 text-accent-teal" />
+          </div>
+          <div>
+            <h3 className="text-lg font-medium text-gray-800">{user?.name}</h3>
+            <p className="text-gray-500 break-all">{user?.email}</p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-gray-100">
+          {[
+            { label: "Role", value: user?.role },
+            { label: "Subscription", value: user?.subscription },
+            { label: "Member Since", value: user?.joinDate },
+          ].map(({ label, value }) => (
+            <div key={label}>
+              <label className="block text-sm font-medium text-gray-500 mb-1">
+                {label}
+              </label>
+              <p className="text-gray-800">{value}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="bg-white rounded-xl shadow-sm p-4 sm:p-6">
+        <h3 className="text-lg font-medium text-gray-800 mb-4">Account Actions</h3>
+        <div className="space-y-3">
+          <button
+            onClick={handleLogout}
+            className="w-full flex items-center justify-between px-4 py-3 rounded-lg text-left hover:bg-red-50 transition-colors group"
+          >
+            <div className="flex items-center gap-3">
+              <LogOut className="w-5 h-5 text-red-500" />
+              <span className="font-medium text-gray-800 group-hover:text-red-600">Logout</span>
+            </div>
+            <ChevronRight className="w-4 h-4 text-gray-400 group-hover:text-red-500" />
+          </button>
+        </div>
+      </div>
+    </div>
   );
 
   const renderBookings = () => (
-    <CardWrapper>
-      <h2 className="text-3xl font-semibold text-neutral-white mb-6 tracking-wide">
-        Your Bookings
-      </h2>
+    <div className="space-y-6">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 sm:gap-0">
+        <h2 className="text-2xl font-semibold text-gray-800">Your Bookings</h2>
+        <span className="px-3 py-1 bg-accent-teal/10 text-accent-teal text-sm font-medium rounded-full">
+          {bookings.length} {bookings.length === 1 ? 'Booking' : 'Bookings'}
+        </span>
+      </div>
+
       {bookings.length === 0 ? (
-        <div className="text-center py-8 animate-pulse">
-          <Calendar className="w-16 h-16 text-neutral-white/30 mx-auto mb-4" />
-          <p className="text-neutral-white/70">
-            You don't have any bookings yet
+        <div className="bg-white rounded-xl shadow-sm p-6 sm:p-8 text-center">
+          <div className="w-16 h-16 mx-auto mb-4 bg-gray-50 rounded-full flex items-center justify-center">
+            <Calendar className="w-8 h-8 text-gray-400" />
+          </div>
+          <h3 className="text-lg font-medium text-gray-800 mb-2">No bookings yet</h3>
+          <p className="text-gray-500 max-w-md mx-auto">
+            You don't have any bookings at the moment. When you book a service, it will appear here.
           </p>
         </div>
       ) : (
@@ -155,125 +189,173 @@ export function AuthProfile() {
           {bookings.map((booking) => (
             <motion.div
               key={booking._id}
-              className="bg-secondary-dark p-4 rounded-xl border border-primary-accent/10 text-white shadow-md shadow-black/30"
-              whileHover={{ scale: 1.01 }}
-              transition={{ duration: 0.3 }}
+              className="bg-white p-4 sm:p-5 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow"
+              whileHover={{ y: -2 }}
+              transition={{ duration: 0.2 }}
             >
-              <div className="flex justify-between items-start">
-                <div>
-                  <p className="font-semibold text-lg">{booking.serviceName}</p>
-                  <p className="text-white/70 text-sm">
-                    Date: {new Date(booking.bookingDate).toLocaleDateString()}
-                  </p>
-                  {booking.price > 0 && (
-                    <p className="text-white/70 text-sm">
-                      Price: ${booking.price.toFixed(2)}
+              <div className="flex flex-col sm:flex-row justify-between gap-4">
+                <div className="flex-1">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span
+                      className={`w-2 h-2 rounded-full ${booking.status === "confirmed"
+                        ? "bg-green-500"
+                        : booking.status === "pending"
+                          ? "bg-yellow-500"
+                          : "bg-green-500"
+                        }`}
+                    />
+                    <span
+                      className={`text-xs font-medium ${booking.status === "confirmed"
+                        ? "text-green-600"
+                        : booking.status === "pending"
+                          ? "text-yellow-600"
+                          : "text-green-600"
+                        }`}
+                    >
+                      {booking.status.charAt(0).toUpperCase() + booking.status.slice(1)}
+                    </span>
+                  </div>
+                  <h3 className="font-medium text-gray-800">{booking.serviceName}</h3>
+                  <div className="mt-2 space-y-1">
+                    <p className="text-gray-500 text-sm flex items-center gap-1">
+                      <Calendar className="w-3.5 h-3.5" />
+                      {new Date(booking.bookingDate).toLocaleDateString()}
                     </p>
-                  )}
+                    {booking.price > 0 && (
+                      <p className="text-gray-500 text-sm flex items-center gap-1">
+                        <CreditCard className="w-3.5 h-3.5" />
+                        ${booking.price.toFixed(2)}
+                      </p>
+                    )}
+                  </div>
                   {booking.notes && (
-                    <p className="text-white/70 text-sm mt-2">
+                    <p className="text-gray-500 text-sm mt-3 p-2 bg-gray-50 rounded-md">
                       {booking.notes}
                     </p>
                   )}
                 </div>
-                <div className="flex flex-col items-end">
-                  <span
-                    className={`px-2 py-1 rounded-full text-xs font-medium shadow-inner ${
-                      booking.status === "confirmed"
-                        ? "bg-green-500/20 text-green-400"
-                        : booking.status === "pending"
-                        ? "bg-yellow-500/20 text-yellow-400"
-                        : "bg-red-500/20 text-red-400"
-                    }`}
-                  >
-                    {booking.status.charAt(0).toUpperCase() +
-                      booking.status.slice(1)}
-                  </span>
-                  {booking.status === "pending" && (
+
+                {booking.status === "pending" && (
+                  <div className="self-start sm:self-center">
                     <button
                       onClick={() => handleCancelBooking(booking._id)}
-                      className="mt-2 text-accent-danger/70 hover:text-accent-danger text-sm transition-all duration-200 hover:scale-105"
+                      className="text-sm text-red-500 hover:text-red-600 font-medium px-3 py-1 border border-red-100 rounded-md hover:bg-red-50"
                       disabled={loading}
                     >
-                      Cancel
+                      {loading ? "Cancelling..." : "Cancel"}
                     </button>
-                  )}
-                </div>
+                  </div>
+                )}
               </div>
             </motion.div>
           ))}
         </div>
       )}
-    </CardWrapper>
+    </div>
   );
 
   const renderContent = () => {
     if (!user) return null;
     return (
       <AnimatePresence mode="wait">
-        {activeTab === "account" && <>{renderAccountDetails()}</>}
-        {activeTab === "bookings" && <>{renderBookings()}</>}
+        {activeTab === "account" && (
+          <motion.div
+            key="account"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.3 }}
+          >
+            {renderAccountDetails()}
+          </motion.div>
+        )}
+        {activeTab === "bookings" && (
+          <motion.div
+            key="bookings"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.3 }}
+          >
+            {renderBookings()}
+          </motion.div>
+        )}
+        {(activeTab === "notifications" || activeTab === "billing" || activeTab === "settings") && (
+          <motion.div
+            key={activeTab}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.3 }}
+            className="bg-white rounded-xl shadow-sm p-8 text-center"
+          >
+            <div className="w-16 h-16 mx-auto mb-4 bg-gray-50 rounded-full flex items-center justify-center">
+              {activeTab === "notifications" && <Bell className="w-8 h-8 text-gray-400" />}
+              {activeTab === "billing" && <CreditCard className="w-8 h-8 text-gray-400" />}
+              {activeTab === "settings" && <Settings className="w-8 h-8 text-gray-400" />}
+            </div>
+            <h3 className="text-lg font-medium text-gray-800 mb-2">Coming Soon</h3>
+            <p className="text-gray-500 max-w-md mx-auto">
+              This feature is currently under development and will be available soon.
+            </p>
+          </motion.div>
+        )}
       </AnimatePresence>
     );
   };
 
   return (
-    <div className="pt-24 pb-16 min-h-screen bg-gradient-to-b from-black via-[#0e0e0e] to-black transition-all duration-500">
+    <div className="pt-24 pb-16 min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="grid md:grid-cols-4 gap-8">
-          <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-            className="md:col-span-1"
-          >
-            <div className="bg-secondary-dark/50 backdrop-blur-sm rounded-xl p-6 border border-primary-accent/20 shadow-lg shadow-purple-900/10">
-              <div className="text-center mb-6">
-                <div className="w-24 h-24 mx-auto mb-4 relative group">
-                  <div className="absolute inset-0 rounded-full animate-pulse bg-gradient-to-b from-red-500 to-black blur-2xl opacity-40" />
-                  <div className="relative z-10 bg-gradient-to-b from-red-500 to-black rounded-full flex items-center justify-center w-full h-full">
-                    <User className="w-12 h-12 text-neutral-white" />
-                  </div>
-                </div>
-                <h2 className="text-xl font-semibold text-neutral-white">
-                  {user?.name}
-                </h2>
-                <p className="text-neutral-white/70">{user?.role}</p>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+          className="bg-white rounded-xl shadow-sm overflow-hidden mb-6"
+        >
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-4 sm:p-6 gap-4">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 bg-gradient-to-br from-accent-teal to-accent-purple rounded-full flex items-center justify-center">
+                <User className="w-6 h-6 text-white" />
               </div>
+              <div>
+                <h2 className="font-medium text-gray-800">{user?.name || "User"}</h2>
+                <p className="text-sm text-gray-500">{user?.subscription}</p>
+              </div>
+            </div>
 
-              <nav className="space-y-2">
+            <nav className="flex justify-start sm:justify-center">
+              <div className="flex space-x-3 overflow-x-auto py-1">
                 {menuItems.map((item) => (
                   <button
                     key={item.id}
                     onClick={() => setActiveTab(item.id)}
-                    className={`w-full flex items-center space-x-3 px-4 py-2 rounded-lg transition-all duration-300 ${
-                      activeTab === item.id
-                        ? "bg-accent-purple/20 text-red-500 shadow-md"
-                        : "text-neutral-white/70 hover:text-neutral-white hover:bg-primary-accent/10"
-                    }`}
+                    className={`relative flex items-center justify-center w-10 h-10 rounded-full transition-all duration-200 ${activeTab === item.id
+                      ? "bg-accent-teal text-white shadow-md"
+                      : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                      }`}
+                    title={item.label}
                   >
                     {item.icon}
-                    <span>{item.label}</span>
-                    {item.badge !== undefined && (
-                      <span className="ml-auto bg-accent-purple/20 text-red-500 px-2 py-0.5 rounded-full text-xs">
+                    {item.badge !== undefined && item.badge > 0 && (
+                      <span className="absolute -top-1 -right-1 bg-red-500 text-white w-5 h-5 flex items-center justify-center text-xs rounded-full">
                         {item.badge}
                       </span>
                     )}
                   </button>
                 ))}
-              </nav>
-            </div>
-          </motion.div>
+              </div>
+            </nav>
+          </div>
+        </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-            className="md:col-span-3"
-          >
-            {renderContent()}
-          </motion.div>
-        </div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          {renderContent()}
+        </motion.div>
       </div>
     </div>
   );

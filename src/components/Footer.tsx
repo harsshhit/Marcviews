@@ -9,7 +9,7 @@ export function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-start mb-12 pb-12 border-b border-gray-800">
           <div className="mb-8 md:mb-0 md:w-1/3">
             <div className="flex items-center mb-6">
-              <Shield className="h-8 w-8 text-red-600" strokeWidth={2} />
+              <Shield className="h-8 w-8 text-green-600" strokeWidth={2} />
               <span className="ml-3 text-2xl font-bold tracking-tight">
                 MarcViews
               </span>
@@ -60,7 +60,7 @@ export function Footer() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 md:w-2/3">
             <div>
-              <h4 className="text-sm font-bold uppercase tracking-wider text-red-600 mb-4">
+              <h4 className="text-sm font-bold uppercase tracking-wider text-green-600 mb-4">
                 Quick Links
               </h4>
               <ul className="space-y-3">
@@ -113,7 +113,7 @@ export function Footer() {
             </div>
 
             <div>
-              <h4 className="text-sm font-bold uppercase tracking-wider text-red-600 mb-4">
+              <h4 className="text-sm font-bold uppercase tracking-wider text-green-600 mb-4">
                 Contact
               </h4>
               <div className="space-y-4">
@@ -149,7 +149,7 @@ export function Footer() {
             </div>
 
             <div>
-              <h4 className="text-sm font-bold uppercase tracking-wider text-red-600 mb-4">
+              <h4 className="text-sm font-bold uppercase tracking-wider text-green-600 mb-4">
                 Legal
               </h4>
               <ul className="space-y-3">

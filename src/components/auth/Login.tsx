@@ -1,4 +1,4 @@
-import  { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 
@@ -37,7 +37,7 @@ const Login = () => {
         </div>
 
         {error && (
-          <div className="mb-6 p-4 bg-red-50 border-l-4 border-red-600 text-red-700 text-sm">
+          <div className="mb-6 p-4 bg-green-50 border-l-4 border-green-600 text-green-700 text-sm">
             {error}
           </div>
         )}
@@ -51,7 +51,7 @@ const Login = () => {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-3 border-b-2 border-gray-200 text-black bg-white placeholder-gray-400 focus:outline-none focus:border-red-600 transition-all duration-200"
+              className="w-full px-4 py-3 border-b-2 border-gray-200 text-black bg-white placeholder-gray-400 focus:outline-none focus:border-green-600 transition-all duration-200"
               required
             />
           </div>
@@ -64,7 +64,7 @@ const Login = () => {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-3 border-b-2 border-gray-200 text-black bg-white placeholder-gray-400 focus:outline-none focus:border-red-600 transition-all duration-200"
+              className="w-full px-4 py-3 border-b-2 border-gray-200 text-black bg-white placeholder-gray-400 focus:outline-none focus:border-green-600 transition-all duration-200"
               required
             />
           </div>
@@ -75,7 +75,7 @@ const Login = () => {
                 id="remember-me"
                 name="remember-me"
                 type="checkbox"
-                className="h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300 rounded"
+                className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
               />
               <label
                 htmlFor="remember-me"
@@ -88,7 +88,7 @@ const Login = () => {
             <div className="text-sm">
               <button
                 type="button"
-                className="text-red-600 hover:text-red-800 font-medium"
+                className="text-green-600 hover:text-green-800 font-medium"
               >
                 Forgot password?
               </button>
@@ -170,7 +170,7 @@ const Login = () => {
             Don't have an account?{" "}
             <button
               onClick={() => navigate("/register")}
-              className="text-red-600 font-medium hover:text-red-800 transition-colors duration-200"
+              className="text-green-600 font-medium hover:text-green-800 transition-colors duration-200"
             >
               Create account
             </button>

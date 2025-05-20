@@ -29,7 +29,7 @@ import { AuthProfile } from "./components/Profile";
 import { BlogPost } from "./components/company/BlogPost";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
-import { AppointmentForm } from "./components/contact/AppointmentForm";
+import   AppointmentForm  from "./components/contact/AppointmentForm";
 
 const router = createBrowserRouter(
   [

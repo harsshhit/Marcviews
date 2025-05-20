@@ -91,13 +91,13 @@ export function Categories() {
 
               <div className="relative">
                 <motion.div
-                  className="text-red-500 mb-4 group-hover:scale-125 group-hover:rotate-12 transition-transform duration-500"
+                  className="text-green-500 mb-4 group-hover:scale-125 group-hover:rotate-12 transition-transform duration-500"
                   whileHover={{ scale: 1.25, rotate: 10 }}
                   transition={{ type: "spring", stiffness: 300 }}
                 >
                   {category.icon}
                 </motion.div>
-                <h3 className="text-xl font-semibold mb-2 text-neutral-white group-hover:text-red-500 transition-colors duration-300">
+                <h3 className="text-xl font-semibold mb-2 text-neutral-white group-hover:text-green-500 transition-colors duration-300">
                   {category.title}
                 </h3>
                 <p className="text-neutral-white/80 mb-4 group-hover:text-neutral-white/90 transition-colors duration-300">

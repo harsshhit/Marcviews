@@ -42,7 +42,7 @@ const Register = () => {
         </div>
 
         {error && (
-          <div className="mb-6 p-4 bg-red-50 border-l-4 border-red-600 text-red-700 text-sm">
+          <div className="mb-6 p-4 bg-green-50 border-l-4 border-green-600 text-green-700 text-sm">
             {error}
           </div>
         )}
@@ -56,7 +56,7 @@ const Register = () => {
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full px-4 py-3 border-b-2 border-gray-200 text-black bg-white placeholder-gray-400 focus:outline-none focus:border-red-600 transition-all duration-200"
+              className="w-full px-4 py-3 border-b-2 border-gray-200 text-black bg-white placeholder-gray-400 focus:outline-none focus:border-green-600 transition-all duration-200"
               required
             />
           </div>
@@ -69,7 +69,7 @@ const Register = () => {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-3 border-b-2 border-gray-200 text-black bg-white placeholder-gray-400 focus:outline-none focus:border-red-600 transition-all duration-200"
+              className="w-full px-4 py-3 border-b-2 border-gray-200 text-black bg-white placeholder-gray-400 focus:outline-none focus:border-green-600 transition-all duration-200"
               required
             />
           </div>
@@ -82,7 +82,7 @@ const Register = () => {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-3 border-b-2 border-gray-200 text-black bg-white placeholder-gray-400 focus:outline-none focus:border-red-600 transition-all duration-200"
+              className="w-full px-4 py-3 border-b-2 border-gray-200 text-black bg-white placeholder-gray-400 focus:outline-none focus:border-green-600 transition-all duration-200"
               required
             />
           </div>
@@ -95,7 +95,7 @@ const Register = () => {
               type="password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              className="w-full px-4 py-3 border-b-2 border-gray-200 text-black bg-white placeholder-gray-400 focus:outline-none focus:border-red-600 transition-all duration-200"
+              className="w-full px-4 py-3 border-b-2 border-gray-200 text-black bg-white placeholder-gray-400 focus:outline-none focus:border-green-600 transition-all duration-200"
               required
             />
           </div>
@@ -175,7 +175,7 @@ const Register = () => {
             Already have an account?{" "}
             <button
               onClick={() => navigate("/login")}
-              className="text-red-600 font-medium hover:text-red-800 transition-colors duration-200"
+              className="text-green-600 font-medium hover:text-green-800 transition-colors duration-200"
             >
               Sign in
             </button>
@@ -184,11 +184,11 @@ const Register = () => {
 
         <p className="mt-8 text-xs text-center text-gray-500">
           By creating an account, you agree to our{" "}
-          <a href="#" className="text-red-600 hover:text-red-800">
+          <a href="#" className="text-green-600 hover:text-green-800">
             Terms of Service
           </a>{" "}
           and{" "}
-          <a href="#" className="text-red-600 hover:text-red-800">
+          <a href="#" className="text-green-600 hover:text-green-800">
             Privacy Policy
           </a>
         </p>

@@ -158,7 +158,7 @@ export function HeroSection() {
       {/* Background shapes */}
       <div className="absolute inset-0 overflow-hidden z-0">
         <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-black/90 via-slate-900/80 to-slate-800/70"></div>
-        <div className="absolute -top-32 -left-32 w-64 h-64 bg-red-500/10 rounded-full blur-3xl"></div>
+        <div className="absolute -top-32 -left-32 w-64 h-64 bg-green-500/10 rounded-full blur-3xl"></div>
         <div className="absolute top-1/3 -right-32 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"></div>
         <div className="absolute -bottom-32 left-1/3 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl"></div>
       </div>
@@ -200,7 +200,7 @@ export function HeroSection() {
                         <span className="relative inline-block">
                           {slide.title}
                           <motion.span
-                            className="absolute -bottom-2 left-0 h-1 bg-gradient-to-r from-red-500 via-purple-500 to-blue-500"
+                            className="absolute -bottom-2 left-0 h-1 bg-gradient-to-r from-green-500 via-purple-500 to-blue-500"
                             initial={{ width: 0 }}
                             animate={{ width: "100%" }}
                             transition={{ delay: 0.8, duration: 0.8 }}
@@ -231,7 +231,7 @@ export function HeroSection() {
                             className="flex items-center space-x-3"
                             variants={featureItemVariants}
                           >
-                            <div className="flex-shrink-0 w-2 h-8 rounded-full bg-gradient-to-b from-red-500 to-purple-600" />
+                            <div className="flex-shrink-0 w-2 h-8 rounded-full bg-gradient-to-b from-green-500 to-purple-600" />
                             <span className="text-white/90 text-lg">
                               {feature}
                             </span>
@@ -247,7 +247,7 @@ export function HeroSection() {
                         whileHover="hover"
                         whileTap="tap"
                       >
-                        <button className="px-8 py-3 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white rounded-full flex items-center space-x-2 transform transition-all duration-300 shadow-lg">
+                        <button className="px-8 py-3 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white rounded-full flex items-center space-x-2 transform transition-all duration-300 shadow-lg">
                           <span>Get Started</span>
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -325,11 +325,10 @@ export function HeroSection() {
         {slides.map((_, index) => (
           <motion.button
             key={`indicator-${index}`}
-            className={`h-3 rounded-full transition-all duration-500 ${
-              index === currentSlide
-                ? "bg-gradient-to-r from-red-500 to-purple-600 w-10"
+            className={`h-3 rounded-full transition-all duration-500 ${index === currentSlide
+                ? "bg-gradient-to-r from-green-500 to-purple-600 w-10"
                 : "bg-white/30 backdrop-blur-sm w-3 hover:bg-white/50"
-            }`}
+              }`}
             onClick={() => handleSlideChange(index)}
             whileHover={{ scale: 1.2 }}
             whileTap={{ scale: 0.9 }}
@@ -342,9 +341,8 @@ export function HeroSection() {
       <div className="absolute bottom-8 right-8 z-20">
         <button
           onClick={() => setIsAutoplay(!isAutoplay)}
-          className={`p-2 rounded-full backdrop-blur-sm transition-all duration-300 ${
-            isAutoplay ? "bg-white/20 text-white" : "bg-white/10 text-white/70"
-          }`}
+          className={`p-2 rounded-full backdrop-blur-sm transition-all duration-300 ${isAutoplay ? "bg-white/20 text-white" : "bg-white/10 text-white/70"
+            }`}
           aria-label={isAutoplay ? "Pause autoplay" : "Start autoplay"}
         >
           {isAutoplay ? (
