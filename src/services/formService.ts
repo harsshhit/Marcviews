@@ -114,28 +114,9 @@ const formService = {
       const response = await api.post("/contacts", submissionData);
 
       // If user is logged in, create a booking
-      if (data.userId) {
-        try {
-          // Create a booking for the contact form submission
-          const contactService = {
-            _id: "contact-form-service", // Use a fixed ID for contact form service
-            name: "Contact Form Submission",
-            description: `Contact form submission from ${data.name}${
-              data.companyName ? ` - ${data.companyName}` : ""
-            }`,
-            price: 0,
-            type: "contact",
-          };
-          await bookingService.createBooking(
-            contactService._id,
-            new Date().toISOString(),
-            contactService.description
-          );
-        } catch (error) {
-          console.error("Failed to create contact form booking:", error);
-          // Don't throw the error since the contact form was submitted successfully
-        }
-      }
+      // Note: We're skipping the booking creation for now as it requires a valid service ID
+      // This will be handled separately or through a different mechanism
+      // The contact form submission itself is successful without this booking
 
       return response.data;
     } catch (error) {
