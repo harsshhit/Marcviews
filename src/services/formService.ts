@@ -108,6 +108,9 @@ const formService = {
         delete submissionData.userId;
       }
 
+      // Log the data being sent to help with debugging
+      console.log("Submitting contact form data:", submissionData);
+
       const response = await api.post("/contacts", submissionData);
 
       // If user is logged in, create a booking
@@ -137,6 +140,18 @@ const formService = {
       return response.data;
     } catch (error) {
       console.error("Contact submission error:", error);
+
+      // Improved error handling to extract more specific error messages
+      if (error.response && error.response.data) {
+        const errorMessage = error.response.data.message ||
+                            (error.response.data.error ? error.response.data.error :
+                            "Server error. Please try again.");
+
+        // Create a new error with the extracted message
+        const enhancedError = new Error(errorMessage);
+        throw enhancedError;
+      }
+
       throw error;
     }
   },

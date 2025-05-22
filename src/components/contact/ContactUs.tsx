@@ -208,10 +208,9 @@ export function ContactUs() {
                   />
                 </div>
                 <div className={`transition-all duration-300 ${activeField === 'company' ? 'scale-[1.02]' : ''}`}>
-                  <label className="block text-gray-600 mb-1 text-sm font-medium">Company Name*</label>
+                  <label className="block text-gray-600 mb-1 text-sm font-medium">Company Name</label>
                   <input
                     className="w-full p-3 rounded-lg bg-white text-gray-800 border border-gray-200 focus:border-green-400 focus:ring-2 focus:ring-green-100 outline-none transition-all duration-300"
-                    required
                     value={formData.companyName}
                     onFocus={() => setActiveField('company')}
                     onBlur={() => setActiveField(null)}
