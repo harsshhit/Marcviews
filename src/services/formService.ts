@@ -31,8 +31,18 @@ export interface ContactFormData {
   country?: string;
   inquiry: string;
   inquiryType?: "general" | "sales" | "support" | "partnership" | "other";
-  budget?: "<$5,000" | "$5,000-$10,000" | "$10,000-$25,000" | "$25,000-$50,000" | "$50,000+";
-  timeframe?: "immediate" | "1-3 months" | "3-6 months" | "6-12 months" | "12+ months";
+  budget?:
+    | "<$5,000"
+    | "$5,000-$10,000"
+    | "$10,000-$25,000"
+    | "$25,000-$50,000"
+    | "$50,000+";
+  timeframe?:
+    | "immediate"
+    | "1-3 months"
+    | "3-6 months"
+    | "6-12 months"
+    | "12+ months";
   howDidYouHear?: string;
   signUpForUpdates: boolean;
   userId?: string; // Add user ID for logged-in users
@@ -105,9 +115,11 @@ const formService = {
         try {
           // Create a booking for the contact form submission
           const contactService = {
-            _id: `contact-${Date.now()}`,
+            _id: "contact-form-service", // Use a fixed ID for contact form service
             name: "Contact Form Submission",
-            description: `Contact form submission from ${data.name}${data.companyName ? ` - ${data.companyName}` : ''}`,
+            description: `Contact form submission from ${data.name}${
+              data.companyName ? ` - ${data.companyName}` : ""
+            }`,
             price: 0,
             type: "contact",
           };
@@ -118,6 +130,7 @@ const formService = {
           );
         } catch (error) {
           console.error("Failed to create contact form booking:", error);
+          // Don't throw the error since the contact form was submitted successfully
         }
       }
 

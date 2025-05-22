@@ -1,4 +1,5 @@
 import api from "./api";
+import { AxiosError } from "axios";
 
 export interface LoginData {
   email: string;
@@ -44,9 +45,10 @@ const authService = {
     try {
       const response = await api.post("/auth/login", data);
       return response.data;
-    } catch (error: any) {
+    } catch (error) {
+      const axiosError = error as AxiosError<AuthError>;
       throw new Error(
-        error.response?.data?.message || "Login failed. Please try again."
+        axiosError.response?.data?.message || "Login failed. Please try again."
       );
     }
   },
@@ -55,9 +57,10 @@ const authService = {
     try {
       const response = await api.post("/auth/register", data);
       return response.data;
-    } catch (error: any) {
+    } catch (error) {
+      const axiosError = error as AxiosError<AuthError>;
       throw new Error(
-        error.response?.data?.message ||
+        axiosError.response?.data?.message ||
           "Registration failed. Please try again."
       );
     }
@@ -67,9 +70,10 @@ const authService = {
     try {
       const response = await api.get(`/auth/verify-email/${token}`);
       return response.data;
-    } catch (error: any) {
+    } catch (error) {
+      const axiosError = error as AxiosError<AuthError>;
       throw new Error(
-        error.response?.data?.message ||
+        axiosError.response?.data?.message ||
           "Email verification failed. Please try again."
       );
     }
@@ -79,9 +83,10 @@ const authService = {
     try {
       const response = await api.post("/auth/forgot-password", { email });
       return response.data;
-    } catch (error: any) {
+    } catch (error) {
+      const axiosError = error as AxiosError<AuthError>;
       throw new Error(
-        error.response?.data?.message ||
+        axiosError.response?.data?.message ||
           "Password reset request failed. Please try again."
       );
     }
@@ -94,9 +99,10 @@ const authService = {
         confirmPassword: data.confirmPassword,
       });
       return response.data;
-    } catch (error: any) {
+    } catch (error) {
+      const axiosError = error as AxiosError<AuthError>;
       throw new Error(
-        error.response?.data?.message ||
+        axiosError.response?.data?.message ||
           "Password reset failed. Please try again."
       );
     }
@@ -106,9 +112,10 @@ const authService = {
     try {
       const response = await api.get("/auth/me");
       return response.data;
-    } catch (error: any) {
+    } catch (error) {
+      const axiosError = error as AxiosError<AuthError>;
       throw new Error(
-        error.response?.data?.message ||
+        axiosError.response?.data?.message ||
           "Failed to fetch user data. Please try again."
       );
     }

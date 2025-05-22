@@ -1,4 +1,4 @@
-import React from "react";
+// import React from "react";
 import {
   Routes,
   Route,
@@ -12,10 +12,10 @@ import { Categories } from "./components/home/Categories";
 import { Footer } from "./components/Footer";
 import { AppProvider } from "./context/AppContext";
 import { AuthProvider } from "./context/AuthContext";
-import { ServiceTemplate } from "./components/ServiceTemplate";
-import { servicesData } from "./components/services/services";
-import { solutionsData } from "./components/solutions/solutions";
-import { aiData } from "./components/ai/ai";
+// import { ServiceTemplate } from "./components/ServiceTemplate";
+// import { servicesData } from "./components/services/services";
+// import { solutionsData } from "./components/solutions/solutions";
+// import { aiData } from "./components/ai/ai";
 import { AboutUs } from "./components/company/AboutUs";
 import { Blogs } from "./components/company/Blogs";
 import { Careers } from "./components/company/Careers";
@@ -25,11 +25,11 @@ import { Partners } from "./components/company/Partners";
 import { PayHere } from "./components/company/PayHere";
 // import { Appointments } from "./components/contact/Appointments";
 import { ContactUs } from "./components/contact/ContactUs";
-import { AuthProfile } from "./components/Profile";
+import { AuthProfile } from "./components/auth/Profile";
 import { BlogPost } from "./components/company/BlogPost";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
-import   AppointmentForm  from "./components/contact/AppointmentForm";
+import AppointmentForm from "./components/contact/AppointmentForm";
 
 const router = createBrowserRouter(
   [
@@ -54,7 +54,7 @@ const router = createBrowserRouter(
                   />
                   <Route path="/login" element={<Login />} />
                   <Route path="/register" element={<Register />} />
-                  {Object.entries(servicesData).map(([key, data]) => (
+                  {/* {Object.entries(servicesData).map(([key, data]) => (
                     <Route
                       key={key}
                       path={`/services/${key}`}
@@ -74,7 +74,7 @@ const router = createBrowserRouter(
                       path={`/ai/${key}`}
                       element={<ServiceTemplate data={data} />}
                     />
-                  ))}
+                  ))} */}
                   <Route path="/company/about" element={<AboutUs />} />
                   <Route path="/company/blogs" element={<Blogs />} />
                   <Route path="/company/blogs/:slug" element={<BlogPost />} />
