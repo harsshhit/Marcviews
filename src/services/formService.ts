@@ -1,5 +1,4 @@
 import api from "./api";
-import bookingService from "./bookingService";
 
 // Appointment Types
 export interface AppointmentFormData {
@@ -71,30 +70,41 @@ export interface CareerFormData {
 const formService = {
   // Appointment Submissions
   async submitAppointment(data: AppointmentFormData) {
-    const response = await api.post("/appointments", data);
+    try {
+      // Create a clean copy of the data to send to the API
+      const submissionData = { ...data };
 
-    // If user is logged in, create a booking
-    if (data.userId) {
-      try {
-        // Create a booking for the appointment
-        const appointmentService = {
-          _id: `appointment-${Date.now()}`,
-          name: "Appointment Booking",
-          description: `Appointment booked for ${data.service.title} on ${data.date} at ${data.time}`,
-          price: parseFloat(data.service.price) || 0,
-          type: "appointment",
-        };
-        await bookingService.createBooking(
-          appointmentService._id,
-          new Date().toISOString(),
-          appointmentService.description
-        );
-      } catch (error) {
-        console.error("Failed to create appointment booking:", error);
+      // If userId is not provided (user not logged in), remove it to avoid backend validation issues
+      if (!submissionData.userId) {
+        delete submissionData.userId;
       }
-    }
 
-    return response.data;
+      // Log the data being sent to help with debugging
+      console.log("Submitting appointment data:", submissionData);
+
+      const response = await api.post("/appointments", submissionData);
+
+      // Note: We're skipping the booking creation for now as it requires a valid service ID
+      // This will be handled separately or through a different mechanism
+      // The appointment submission itself is successful without this booking
+
+      return response.data;
+    } catch (error: any) {
+      console.error("Appointment submission error:", error);
+
+      // Improved error handling to extract more specific error messages
+      if (error.response && error.response.data) {
+        const errorMessage = error.response.data.message ||
+                          (error.response.data.error ? error.response.data.error :
+                          "Server error. Please try again.");
+
+        // Create a new error with the extracted message
+        const enhancedError = new Error(errorMessage);
+        throw enhancedError;
+      }
+
+      throw error;
+    }
   },
 
   // Contact Form Submissions
@@ -119,7 +129,7 @@ const formService = {
       // The contact form submission itself is successful without this booking
 
       return response.data;
-    } catch (error) {
+    } catch (error: any) {
       console.error("Contact submission error:", error);
 
       // Improved error handling to extract more specific error messages
@@ -139,62 +149,80 @@ const formService = {
 
   // Partner Applications
   async submitPartnerApplication(data: PartnerFormData) {
-    const response = await api.post("/partners", data);
+    try {
+      // Create a clean copy of the data to send to the API
+      const submissionData = { ...data };
 
-    // If user is logged in, create a booking
-    if (data.userId) {
-      try {
-        // Create a booking for the partner application
-        const partnerService = {
-          _id: `partner-${Date.now()}`,
-          name: "Partner Application",
-          description: `Partner application from ${data.name}${
-            data.company ? ` - ${data.company}` : ""
-          }`,
-          price: 0,
-          type: "partner",
-        };
-        await bookingService.createBooking(
-          partnerService._id,
-          new Date().toISOString(),
-          partnerService.description
-        );
-      } catch (error) {
-        console.error("Failed to create partner application booking:", error);
+      // If userId is not provided (user not logged in), remove it to avoid backend validation issues
+      if (!submissionData.userId) {
+        delete submissionData.userId;
       }
-    }
 
-    return response.data;
+      // Log the data being sent to help with debugging
+      console.log("Submitting partner application data:", submissionData);
+
+      const response = await api.post("/partners", submissionData);
+
+      // Note: We're skipping the booking creation for now as it requires a valid service ID
+      // This will be handled separately or through a different mechanism
+      // The partner application submission itself is successful without this booking
+
+      return response.data;
+    } catch (error: any) {
+      console.error("Partner application submission error:", error);
+
+      // Improved error handling to extract more specific error messages
+      if (error.response && error.response.data) {
+        const errorMessage = error.response.data.message ||
+                          (error.response.data.error ? error.response.data.error :
+                          "Server error. Please try again.");
+
+        // Create a new error with the extracted message
+        const enhancedError = new Error(errorMessage);
+        throw enhancedError;
+      }
+
+      throw error;
+    }
   },
 
   // Career Applications
   async submitCareerApplication(data: CareerFormData) {
-    const response = await api.post("/careers", data);
+    try {
+      // Create a clean copy of the data to send to the API
+      const submissionData = { ...data };
 
-    // If user is logged in, create a booking
-    if (data.userId) {
-      try {
-        // Create a booking for the career application
-        const careerService = {
-          _id: `career-${Date.now()}`,
-          name: "Career Application",
-          description: `Career application from ${data.name}${
-            data.position ? ` for ${data.position}` : ""
-          }`,
-          price: 0,
-          type: "career",
-        };
-        await bookingService.createBooking(
-          careerService._id,
-          new Date().toISOString(),
-          careerService.description
-        );
-      } catch (error) {
-        console.error("Failed to create career application booking:", error);
+      // If userId is not provided (user not logged in), remove it to avoid backend validation issues
+      if (!submissionData.userId) {
+        delete submissionData.userId;
       }
-    }
 
-    return response.data;
+      // Log the data being sent to help with debugging
+      console.log("Submitting career application data:", submissionData);
+
+      const response = await api.post("/careers", submissionData);
+
+      // Note: We're skipping the booking creation for now as it requires a valid service ID
+      // This will be handled separately or through a different mechanism
+      // The career application submission itself is successful without this booking
+
+      return response.data;
+    } catch (error: any) {
+      console.error("Career application submission error:", error);
+
+      // Improved error handling to extract more specific error messages
+      if (error.response && error.response.data) {
+        const errorMessage = error.response.data.message ||
+                          (error.response.data.error ? error.response.data.error :
+                          "Server error. Please try again.");
+
+        // Create a new error with the extracted message
+        const enhancedError = new Error(errorMessage);
+        throw enhancedError;
+      }
+
+      throw error;
+    }
   },
 };
 

@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Calendar, Clock, User, Mail, Phone, FileText, ArrowRight, CheckCircle } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
+import formService from "../../services/formService";
+import { useApp } from "../../context/AppContext";
 
 // This would normally be imported from your service
 const sampleService = {
@@ -13,8 +15,8 @@ const sampleService = {
 export default function AppointmentForm() {
   // Get the authenticated user from AuthContext
   const { user } = useAuth();
-  // Mock notification function (should be replaced with actual notification context)
-  const showNotification = (notification: { type: string; message: string }) => console.log(notification);
+  // Get the notification function from AppContext
+  const { showNotification } = useApp();
 
   const [formData, setFormData] = useState({
     name: user?.name || "",
@@ -24,19 +26,22 @@ export default function AppointmentForm() {
     time: "",
     notes: "",
     userId: user?.id,
+    service: sampleService, // Include the service information
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
 
-  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setError(null);
     setIsSubmitting(true);
 
-    // Simulate API call
-    setTimeout(() => {
+    try {
+      // Submit appointment data to the backend
+      await formService.submitAppointment(formData);
+
       setIsSubmitting(false);
       setSuccess(true);
 
@@ -57,9 +62,20 @@ export default function AppointmentForm() {
           time: "",
           notes: "",
           userId: user?.id,
+          service: sampleService,
         });
       }, 2000);
-    }, 1500);
+    } catch (err) {
+      setIsSubmitting(false);
+      const errorMessage = err instanceof Error
+        ? err.message
+        : "Something went wrong. Please try again.";
+      setError(errorMessage);
+      showNotification({
+        type: "error",
+        message: errorMessage,
+      });
+    }
   };
 
   const inputClasses = "w-full p-3 rounded-lg bg-white text-slate-700 border border-slate-200 focus:border-green-400 focus:ring-2 focus:ring-green-100 outline-none text-sm transition-all duration-300 hover:border-slate-300";
@@ -91,7 +107,7 @@ export default function AppointmentForm() {
         </div>
 
         {error && (
-          <div className="mb-6 p-4 bg-green-50 border border-green-100 rounded-lg text-sm text-green-500 flex items-start space-x-2 animate-fade-in">
+          <div className="mb-6 p-4 bg-red-50 border border-red-100 rounded-lg text-sm text-red-500 flex items-start space-x-2 animate-fade-in">
             <div className="mt-0.5">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
