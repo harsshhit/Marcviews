@@ -59,20 +59,11 @@ export function Careers() {
     }
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      // In a real application, you would upload the file to a storage service
-      // and get back a URL. For now, we'll just store the file name
-      setFormData({ ...formData, resumeUrl: file.name });
-    }
-  };
-
   return (
     <div className="min-h-screen pt-24 px-6 pb-16 bg-gradient-to-b from-primary to-secondary-dark text-white">
       <div className="max-w-7xl mx-auto space-y-12">
         {/* Hero Section */}
-        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-primary-accent/20 to-accent-purple/20 p-8 backdrop-blur-sm">
+        <div className="relative overflow-hidden    bg-gradient-to-r from-primary-accent/20 to-accent-purple/20 p-8 backdrop-blur-sm">
           <div className="absolute inset-0 bg-[url('/pattern.png')] opacity-10" />
           <div className="text-center">
             <h1 className="text-5xl font-bold bg-gradient-to-r from-accent-teal to-accent-purple bg-clip-text text-transparent mb-4">
@@ -141,16 +132,18 @@ export function Careers() {
 
           {/* Application Form Section */}
           <div className="bg-primary-accent/10 rounded-xl p-8 backdrop-blur-sm">
-            <h2 className="text-3xl font-bold text-green-500 mb-6">Apply Now</h2>
+            <h2 className="text-3xl font-bold text-green-500 mb-6">
+              Apply Now
+            </h2>
 
             {error && (
-              <div className="mb-6 p-4 bg-green-500/10 border border-green-500/20 rounded-lg text-green-500">
+              <div className="mb-6 p-4 bg-green-500/10 border border-green-500/20   text-green-500">
                 {error}
               </div>
             )}
 
             {successMessage && (
-              <div className="mb-6 p-4 bg-green-500/10 border border-green-500/20 rounded-lg text-green-500">
+              <div className="mb-6 p-4 bg-green-500/10 border border-green-500/20   text-green-500">
                 {successMessage}
               </div>
             )}
@@ -161,28 +154,28 @@ export function Careers() {
                   label: "Name",
                   type: "text",
                   value: formData.name,
-                  onChange: (e) =>
+                  onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
                     setFormData({ ...formData, name: e.target.value }),
                 },
                 {
                   label: "Email",
                   type: "email",
                   value: formData.email,
-                  onChange: (e) =>
+                  onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
                     setFormData({ ...formData, email: e.target.value }),
                 },
                 {
                   label: "Phone",
                   type: "tel",
                   value: formData.phone,
-                  onChange: (e) =>
+                  onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
                     setFormData({ ...formData, phone: e.target.value }),
                 },
                 {
                   label: "LinkedIn Profile",
                   type: "url",
                   value: formData.linkedinProfile,
-                  onChange: (e) =>
+                  onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
                     setFormData({
                       ...formData,
                       linkedinProfile: e.target.value,
@@ -192,7 +185,7 @@ export function Careers() {
                   label: "Position Applied For",
                   type: "text",
                   value: formData.position,
-                  onChange: (e) =>
+                  onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
                     setFormData({ ...formData, position: e.target.value }),
                 },
               ].map((field, index) => (
@@ -203,7 +196,7 @@ export function Careers() {
                   <input
                     type={field.type}
                     required
-                    className="w-full p-3 rounded-lg bg-primary/50 text-white border border-primary-accent/20 focus:border-accent-teal focus:ring-1 focus:ring-accent-teal transition-all duration-300"
+                    className="w-full p-3   bg-primary/50 text-white border border-primary-accent/20 focus:border-accent-teal focus:ring-1 focus:ring-accent-teal transition-all duration-300"
                     value={field.value}
                     onChange={field.onChange}
                   />
@@ -218,7 +211,7 @@ export function Careers() {
                   type="url"
                   required
                   placeholder="https://drive.google.com/..."
-                  className="w-full p-3 rounded-lg bg-primary/50 text-white border border-primary-accent/20 focus:border-accent-teal focus:ring-1 focus:ring-accent-teal transition-all duration-300"
+                  className="w-full p-3   bg-primary/50 text-white border border-primary-accent/20 focus:border-accent-teal focus:ring-1 focus:ring-accent-teal transition-all duration-300"
                   value={formData.resumeUrl}
                   onChange={(e) =>
                     setFormData({ ...formData, resumeUrl: e.target.value })
@@ -232,7 +225,7 @@ export function Careers() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-accent-teal text-primary font-semibold px-6 py-3 rounded-lg hover:bg-accent-teal/90 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full bg-accent-teal text-primary font-semibold px-6 py-3   hover:bg-accent-teal/90 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isSubmitting ? "Submitting..." : "Submit Application"}
               </button>

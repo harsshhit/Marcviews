@@ -6,7 +6,7 @@ export function Leadership() {
     <div className="min-h-screen pt-24 px-6 pb-16 bg-gradient-to-b from-primary to-secondary-dark text-white">
       <div className="max-w-5xl mx-auto space-y-12">
         {/* Hero Section */}
-        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-primary-accent/20 to-accent-purple/20 p-8 backdrop-blur-sm">
+        <div className="relative overflow-hidden    bg-gradient-to-r from-primary-accent/20 to-accent-purple/20 p-8 backdrop-blur-sm">
           <div className="absolute inset-0 bg-[url('/pattern.png')] opacity-10" />
           <h1 className="text-5xl font-bold bg-gradient-to-r from-accent-teal to-accent-purple bg-clip-text text-transparent mb-4">
             Leadership
@@ -21,7 +21,7 @@ export function Leadership() {
         <div className="space-y-6">
           <div className="flex flex-col md:flex-row gap-8 items-start">
             <div className="w-full md:w-1/3">
-              <div className="relative rounded-2xl overflow-hidden aspect-square">
+              <div className="relative    overflow-hidden aspect-square">
                 <img
                   src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=500&h=500&fit=crop"
                   alt="Kumar Shanu"
@@ -43,7 +43,7 @@ export function Leadership() {
                 href="https://www.linkedin.com/in/kumarshanu"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center px-6 py-3 bg-accent-teal/10 text-green-500 rounded-lg hover:bg-accent-teal/20 transition-colors duration-300"
+                className="inline-flex items-center px-6 py-3 bg-accent-teal/10 text-green-500   hover:bg-accent-teal/20 transition-colors duration-300"
               >
                 <Linkedin className="mr-2" /> Connect on LinkedIn
               </a>

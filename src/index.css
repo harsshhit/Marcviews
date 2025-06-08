@@ -31,7 +31,7 @@
   }
 
   .card {
-    @apply bg-white rounded-2xl shadow-lg overflow-hidden;
+    @apply bg-white    shadow-lg overflow-hidden;
   }
 
   .card-hover {
@@ -41,8 +41,6 @@
   .card-stagger {
     @apply animate-fade-in;
   }
-
- 
 
   .hover-glow {
     @apply transition-all duration-300 hover:shadow-[0_0_15px_rgba(56,178,172,0.3)];
@@ -57,7 +55,7 @@
   }
 
   .btn {
-    @apply px-6 py-3 rounded-lg font-semibold transition-all duration-300;
+    @apply px-6 py-3   font-semibold transition-all duration-300;
   }
 
   .btn-primary {
@@ -73,7 +71,7 @@
   }
 
   .input {
-    @apply w-full p-3 rounded-lg bg-primary text-white border border-primary-accent/20 focus:border-accent-teal focus:ring-1 focus:ring-accent-teal outline-none transition-all duration-300;
+    @apply w-full p-3   bg-primary text-white border border-primary-accent/20 focus:border-accent-teal focus:ring-1 focus:ring-accent-teal outline-none transition-all duration-300;
   }
 
   .label {

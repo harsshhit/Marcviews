@@ -61,7 +61,7 @@ export function Partners() {
     <div className="min-h-screen pt-24 px-6 pb-16 bg-gradient-to-b from-primary to-secondary-dark text-white">
       <div className="max-w-7xl mx-auto space-y-12">
         {/* Hero Section */}
-        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-primary-accent/20 to-accent-purple/20 p-8 backdrop-blur-sm">
+        <div className="relative overflow-hidden    bg-gradient-to-r from-primary-accent/20 to-accent-purple/20 p-8 backdrop-blur-sm">
           <div className="absolute inset-0 bg-[url('/pattern.png')] opacity-10" />
           <div className="text-center">
             <h1 className="text-5xl font-bold bg-gradient-to-r from-accent-teal to-accent-purple bg-clip-text text-transparent mb-4">
@@ -125,13 +125,13 @@ export function Partners() {
             </h2>
 
             {error && (
-              <div className="mb-6 p-4 bg-green-500/10 border border-green-500/20 rounded-lg text-green-500">
+              <div className="mb-6 p-4 bg-green-500/10 border border-green-500/20   text-green-500">
                 {error}
               </div>
             )}
 
             {successMessage && (
-              <div className="mb-6 p-4 bg-green-500/10 border border-green-500/20 rounded-lg text-green-500">
+              <div className="mb-6 p-4 bg-green-500/10 border border-green-500/20   text-green-500">
                 {successMessage}
               </div>
             )}
@@ -178,7 +178,7 @@ export function Partners() {
                   <input
                     type={field.type}
                     required={index < 2}
-                    className="w-full p-3 rounded-lg bg-primary/50 text-white border border-primary-accent/20 focus:border-accent-teal focus:ring-1 focus:ring-accent-teal transition-all duration-300"
+                    className="w-full p-3   bg-primary/50 text-white border border-primary-accent/20 focus:border-accent-teal focus:ring-1 focus:ring-accent-teal transition-all duration-300"
                     value={field.value}
                     onChange={field.onChange}
                   />
@@ -188,7 +188,7 @@ export function Partners() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-accent-teal text-primary font-semibold px-6 py-3 rounded-lg hover:bg-accent-teal/90 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full bg-accent-teal text-primary font-semibold px-6 py-3   hover:bg-accent-teal/90 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isSubmitting ? "Submitting..." : "Submit"}
               </button>
@@ -245,7 +245,7 @@ export function Partners() {
                 rel="noopener noreferrer"
                 className="group bg-primary-accent/10 rounded-xl p-6 backdrop-blur-sm hover:bg-primary-accent/20 transition-all duration-300 flex flex-col items-center justify-center"
               >
-                <div className="w-32 h-32 mb-4 rounded-lg overflow-hidden">
+                <div className="w-32 h-32 mb-4   overflow-hidden">
                   <img
                     src={partner.logo}
                     alt={partner.name}

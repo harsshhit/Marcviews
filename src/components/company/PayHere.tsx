@@ -6,7 +6,7 @@ export function PayHere() {
     <div className="min-h-screen pt-24 px-6 pb-16 bg-gradient-to-b from-primary to-secondary-dark text-white">
       <div className="max-w-4xl mx-auto space-y-12">
         {/* Hero Section */}
-        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-primary-accent/20 to-accent-purple/20 p-8 backdrop-blur-sm">
+        <div className="relative overflow-hidden    bg-gradient-to-r from-primary-accent/20 to-accent-purple/20 p-8 backdrop-blur-sm">
           <div className="absolute inset-0 bg-[url('/pattern.png')] opacity-10" />
           <h1 className="text-5xl font-bold bg-gradient-to-r from-accent-teal to-accent-purple bg-clip-text text-transparent mb-4">
             Choose a Payment Method
@@ -20,7 +20,7 @@ export function PayHere() {
           {/* Online Payment */}
           <div className="bg-primary-accent/10 rounded-xl p-8 backdrop-blur-sm hover:bg-primary-accent/20 transition-colors duration-300">
             <div className="flex items-center gap-4 mb-6">
-              <div className="p-3 bg-accent-teal/10 rounded-lg">
+              <div className="p-3 bg-accent-teal/10  ">
                 <CreditCard className="text-green-500 w-6 h-6" />
               </div>
               <h2 className="text-3xl font-bold text-green-500">
@@ -53,7 +53,7 @@ export function PayHere() {
           {/* PayPal */}
           <div className="bg-primary-accent/10 rounded-xl p-8 backdrop-blur-sm hover:bg-primary-accent/20 transition-colors duration-300">
             <div className="flex items-center gap-4 mb-6">
-              <div className="p-3 bg-accent-yellow/10 rounded-lg">
+              <div className="p-3 bg-accent-yellow/10  ">
                 <img src="/paypal.svg" alt="PayPal" className="w-6 h-6" />
               </div>
               <h2 className="text-3xl font-bold text-accent-yellow">PayPal</h2>

@@ -30,9 +30,34 @@ import { BlogPost } from "./components/company/BlogPost";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import AppointmentForm from "./components/contact/AppointmentForm";
+import { Services } from "./components/services/Services";
+import { Solutions } from "./components/solutions/Solutions";
+import { PrivacyPolicy } from "./components/legal/PrivacyPolicy";
+import { TermsOfService } from "./components/legal/TermsOfService";
+import { CookiePolicy } from "./components/legal/CookiePolicy";
+import { SecurityPolicy } from "./components/legal/SecurityPolicy";
+import Dashboard from "./Admin/Dashboard";
+import AdminLogin from "./Admin/Login";
+import ProtectedRoute from "./Admin/ProtectedRoute";
 
 const router = createBrowserRouter(
   [
+    {
+      path: "/admin/*",
+      element: (
+        <Routes>
+          <Route path="login" element={<AdminLogin />} />
+          <Route
+            path="dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      ),
+    },
     {
       path: "/*",
       element: (
@@ -54,27 +79,8 @@ const router = createBrowserRouter(
                   />
                   <Route path="/login" element={<Login />} />
                   <Route path="/register" element={<Register />} />
-                  {/* {Object.entries(servicesData).map(([key, data]) => (
-                    <Route
-                      key={key}
-                      path={`/services/${key}`}
-                      element={<ServiceTemplate data={data} />}
-                    />
-                  ))}
-                  {Object.entries(solutionsData).map(([key, data]) => (
-                    <Route
-                      key={key}
-                      path={`/solutions/${key}`}
-                      element={<ServiceTemplate data={data} />}
-                    />
-                  ))}
-                  {Object.entries(aiData).map(([key, data]) => (
-                    <Route
-                      key={key}
-                      path={`/ai/${key}`}
-                      element={<ServiceTemplate data={data} />}
-                    />
-                  ))} */}
+                  <Route path="/services" element={<Services />} />
+                  <Route path="/solutions" element={<Solutions />} />
                   <Route path="/company/about" element={<AboutUs />} />
                   <Route path="/company/blogs" element={<Blogs />} />
                   <Route path="/company/blogs/:slug" element={<BlogPost />} />
@@ -93,6 +99,10 @@ const router = createBrowserRouter(
                   />
                   <Route path="/contact/general" element={<ContactUs />} />
                   <Route path="/profile" element={<AuthProfile />} />
+                  <Route path="/legal/privacy" element={<PrivacyPolicy />} />
+                  <Route path="/legal/terms" element={<TermsOfService />} />
+                  <Route path="/legal/cookies" element={<CookiePolicy />} />
+                  <Route path="/legal/security" element={<SecurityPolicy />} />
                 </Routes>
               </main>
               <Footer />

@@ -5,7 +5,7 @@ export function FAQs() {
     <div className="min-h-screen pt-24 px-6 pb-16 bg-gradient-to-b from-primary to-secondary-dark text-white">
       <div className="max-w-4xl mx-auto space-y-12">
         {/* Hero Section */}
-        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-primary-accent/20 to-accent-purple/20 p-8 backdrop-blur-sm">
+        <div className="relative overflow-hidden    bg-gradient-to-r from-primary-accent/20 to-accent-purple/20 p-8 backdrop-blur-sm">
           <div className="absolute inset-0 bg-[url('/pattern.png')] opacity-10" />
           <h1 className="text-5xl font-bold bg-gradient-to-r from-accent-teal to-accent-purple bg-clip-text text-transparent mb-4">
             Managed IT Services FAQs
@@ -196,7 +196,7 @@ export function FAQs() {
           <div className="flex flex-wrap gap-4">
             <Link
               to="/contact/appointment"
-              className="bg-accent-teal text-primary font-semibold px-6 py-3 rounded-lg hover:bg-accent-teal/90 transition-colors duration-300"
+              className="bg-accent-teal text-primary font-semibold px-6 py-3   hover:bg-accent-teal/90 transition-colors duration-300"
             >
               Book an Appointment
             </Link>
