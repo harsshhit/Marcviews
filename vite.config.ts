@@ -11,13 +11,8 @@ export default defineConfig({
     outDir: "dist",
     // Generate the 404.html file that redirects to index.html for SPA routing
     rollupOptions: {
-      external: ["react", "react-dom"],
       output: {
         manualChunks: undefined,
-        globals: {
-          react: "React",
-          "react-dom": "ReactDOM",
-        },
       },
     },
     commonjsOptions: {
